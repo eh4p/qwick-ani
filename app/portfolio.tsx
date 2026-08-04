@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import {
@@ -532,7 +533,7 @@ function PortfolioContent() {
   const progressRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const lenis = new Lenis({
       duration: prefersReducedMotion ? 0 : 1.15,
@@ -585,20 +586,55 @@ function PortfolioContent() {
           .to(".hero-disciplines", { scale: 1.45, z: 520, opacity: 0, ease: "none" }, 0);
 
         media.add("(min-width: 801px)", () => {
+          const orbitX = window.innerWidth * 0.46;
+          const orbitY = window.innerHeight * 0.14;
+          const orbitApex = window.innerHeight * -0.1;
+          const orbitUnderside = window.innerHeight * 0.5;
           const featureTimeline = gsap.timeline({
+            defaults: { force3D: false },
             scrollTrigger: { trigger: ".work-intro", start: "top top", end: "bottom bottom", scrub: 1.15 },
           });
 
           featureTimeline
+            .set(".feature-card-center", { zIndex: 4 }, 0)
+            .set([".feature-card-left", ".feature-card-right"], { zIndex: 1 }, 0)
             .fromTo(".outline-type", { scale: 0.46, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.85, ease: "power2.out" }, 0)
-            .fromTo(".feature-card-center", { scale: 0.15, z: -1700, opacity: 0, filter: "blur(24px)" }, { scale: 1, z: 0, opacity: 1, filter: "blur(0px)", duration: 1.15, ease: "power2.out" }, 0.08)
-            .fromTo(".feature-card-left", { scale: 0.12, z: -2200, x: -240, opacity: 0, filter: "blur(28px)" }, { scale: 1, z: 0, x: 0, opacity: 0.54, filter: "blur(0px)", duration: 1.1, ease: "power2.out" }, 0.22)
-            .fromTo(".feature-card-right", { scale: 0.12, z: -2200, x: 240, opacity: 0, filter: "blur(28px)" }, { scale: 1, z: 0, x: 0, opacity: 0.5, filter: "blur(0px)", duration: 1.1, ease: "power2.out" }, 0.22)
+            .fromTo(".feature-card-center", { x: 0, y: 0, rotation: 0, scale: 0.15, opacity: 0 }, { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1, duration: 1.15, ease: "power2.out" }, 0.08)
+            .fromTo(".feature-card-left", { x: -orbitX, y: orbitY, rotation: -24, scale: 0.12, opacity: 0 }, { x: -orbitX, y: orbitY, rotation: -24, scale: 0.82, opacity: 0.54, duration: 1.1, ease: "power2.out" }, 0.22)
+            .fromTo(".feature-card-right", { x: orbitX, y: orbitY, rotation: 24, scale: 0.12, opacity: 0 }, { x: orbitX, y: orbitY, rotation: 24, scale: 0.82, opacity: 0.5, duration: 1.1, ease: "power2.out" }, 0.22)
             .fromTo(".showcase-caption", { scale: 0.5, z: -900, opacity: 0 }, { scale: 1, z: 0, opacity: 1, duration: 0.7, ease: "power2.out" }, 0.58)
             .fromTo(".transaction-step i", { scale: 0.5 }, { scale: 1.18, backgroundColor: "#69eea3", stagger: 0.12, yoyo: true, repeat: 1, duration: 0.18 }, 1.05)
-            .to(".feature-card-scene", { scale: 1.58, z: 850, opacity: 0, filter: "blur(20px)", duration: 1.15, ease: "power2.in" }, 1.75)
-            .to(".showcase-caption", { scale: 1.38, z: 520, opacity: 0, filter: "blur(12px)", duration: 0.8, ease: "power2.in" }, 1.88)
-            .to(".outline-type", { scale: 1.24, opacity: 0, duration: 0.8, ease: "power2.in" }, 1.88);
+
+            // Transaction falls left, language rises from the right, assistant circles behind.
+            .set(".feature-card-center", { zIndex: 2 }, 1.58)
+            .set(".feature-card-right", { zIndex: 4 }, 1.58)
+            .set(".feature-card-left", { zIndex: 1 }, 1.58)
+            .to(".feature-card-center", { motionPath: { path: [{ x: 0, y: 0 }, { x: -orbitX * 0.52, y: orbitApex }, { x: -orbitX, y: orbitY }], curviness: 2 }, rotation: -24, scale: 0.82, opacity: 0.54, duration: 0.9, ease: "power1.inOut" }, 1.58)
+            .to(".feature-card-right", { motionPath: { path: [{ x: orbitX, y: orbitY }, { x: orbitX * 0.52, y: orbitApex }, { x: 0, y: 0 }], curviness: 2 }, rotation: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power1.inOut" }, 1.58)
+            .to(".feature-card-left", { motionPath: { path: [{ x: -orbitX, y: orbitY }, { x: -orbitX * 0.5, y: orbitUnderside }, { x: 0, y: orbitUnderside }], curviness: 1.8 }, rotation: 0, scale: 0.44, opacity: 0.08, duration: 0.45, ease: "power1.in" }, 1.58)
+            .to(".feature-card-left", { motionPath: { path: [{ x: 0, y: orbitUnderside }, { x: orbitX * 0.5, y: orbitUnderside }, { x: orbitX, y: orbitY }], curviness: 1.8 }, rotation: 24, scale: 0.82, opacity: 0.5, duration: 0.45, ease: "power1.out" }, 2.03)
+
+            // Language falls left, assistant rises, transaction returns around the lower arc.
+            .set(".feature-card-right", { zIndex: 2 }, 2.72)
+            .set(".feature-card-left", { zIndex: 4 }, 2.72)
+            .set(".feature-card-center", { zIndex: 1 }, 2.72)
+            .to(".feature-card-right", { motionPath: { path: [{ x: 0, y: 0 }, { x: -orbitX * 0.52, y: orbitApex }, { x: -orbitX, y: orbitY }], curviness: 2 }, rotation: -24, scale: 0.82, opacity: 0.54, duration: 0.9, ease: "power1.inOut" }, 2.72)
+            .to(".feature-card-left", { motionPath: { path: [{ x: orbitX, y: orbitY }, { x: orbitX * 0.52, y: orbitApex }, { x: 0, y: 0 }], curviness: 2 }, rotation: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power1.inOut" }, 2.72)
+            .to(".feature-card-center", { motionPath: { path: [{ x: -orbitX, y: orbitY }, { x: -orbitX * 0.5, y: orbitUnderside }, { x: 0, y: orbitUnderside }], curviness: 1.8 }, rotation: 0, scale: 0.44, opacity: 0.08, duration: 0.45, ease: "power1.in" }, 2.72)
+            .to(".feature-card-center", { motionPath: { path: [{ x: 0, y: orbitUnderside }, { x: orbitX * 0.5, y: orbitUnderside }, { x: orbitX, y: orbitY }], curviness: 1.8 }, rotation: 24, scale: 0.82, opacity: 0.5, duration: 0.45, ease: "power1.out" }, 3.17)
+
+            // Assistant falls left, transaction rises, language completes the orbit behind.
+            .set(".feature-card-left", { zIndex: 2 }, 3.86)
+            .set(".feature-card-center", { zIndex: 4 }, 3.86)
+            .set(".feature-card-right", { zIndex: 1 }, 3.86)
+            .to(".feature-card-left", { motionPath: { path: [{ x: 0, y: 0 }, { x: -orbitX * 0.52, y: orbitApex }, { x: -orbitX, y: orbitY }], curviness: 2 }, rotation: -24, scale: 0.82, opacity: 0.54, duration: 0.9, ease: "power1.inOut" }, 3.86)
+            .to(".feature-card-center", { motionPath: { path: [{ x: orbitX, y: orbitY }, { x: orbitX * 0.52, y: orbitApex }, { x: 0, y: 0 }], curviness: 2 }, rotation: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power1.inOut" }, 3.86)
+            .to(".feature-card-right", { motionPath: { path: [{ x: -orbitX, y: orbitY }, { x: -orbitX * 0.5, y: orbitUnderside }, { x: 0, y: orbitUnderside }], curviness: 1.8 }, rotation: 0, scale: 0.44, opacity: 0.08, duration: 0.45, ease: "power1.in" }, 3.86)
+            .to(".feature-card-right", { motionPath: { path: [{ x: 0, y: orbitUnderside }, { x: orbitX * 0.5, y: orbitUnderside }, { x: orbitX, y: orbitY }], curviness: 1.8 }, rotation: 24, scale: 0.82, opacity: 0.5, duration: 0.45, ease: "power1.out" }, 4.31)
+
+            .to(".feature-card-scene", { scale: 1.58, opacity: 0, duration: 1.15, ease: "power2.in", force3D: false }, 5.02)
+            .to(".showcase-caption", { scale: 1.38, z: 520, opacity: 0, filter: "blur(12px)", duration: 0.8, ease: "power2.in" }, 5.15)
+            .to(".outline-type", { scale: 1.24, opacity: 0, duration: 0.8, ease: "power2.in" }, 5.15);
 
           const projectCards = gsap.utils.toArray<HTMLElement>(".project-card");
           const projectTimeline = gsap.timeline({

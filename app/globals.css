@@ -1704,32 +1704,36 @@ button {
   position: absolute;
   z-index: 2;
   inset: 0;
+  contain: layout paint;
+  isolation: isolate;
+  transform-style: flat;
+  will-change: transform, opacity;
 }
 
 .feature-card-position {
   position: absolute;
   top: 45%;
+  left: 50%;
+  contain: layout paint;
+  isolation: isolate;
+  transform: translate(-50%, -50%);
+  transform-style: flat;
+  will-change: transform, opacity;
 }
 
 .feature-card-left {
-  left: -4%;
   width: clamp(22rem, 28vw, 34rem);
-  transform: translate(-12%, -50%) rotate(-23deg);
   transform-origin: center;
   opacity: 0.54;
 }
 
 .feature-card-center {
-  z-index: 4;
-  left: 50%;
   width: clamp(22rem, 25vw, 30rem);
-  transform: translate(-50%, -52%) rotate(1deg);
 }
 
 .feature-card-right {
-  right: -5%;
+  right: auto;
   width: clamp(22rem, 29vw, 35rem);
-  transform: translate(14%, -50%) rotate(24deg);
   transform-origin: center;
   opacity: 0.5;
 }
@@ -1741,6 +1745,9 @@ button {
   border: 1px solid rgba(205, 170, 255, 0.16);
   border-radius: clamp(1.5rem, 2.2vw, 2.3rem);
   box-shadow: 0 3.5rem 8rem rgba(0, 0, 0, 0.7), inset 0 0 5rem rgba(196, 139, 255, 0.08);
+  backface-visibility: hidden;
+  contain: paint;
+  isolation: isolate;
 }
 
 .lia-assistant-card,
@@ -1766,9 +1773,8 @@ button {
   left: 7%;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.35rem;
-  background: rgba(8, 5, 31, 0.72);
+  background: linear-gradient(145deg, rgba(18, 10, 48, 0.96), rgba(7, 4, 27, 0.98));
   box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.34), inset 0 0 2rem rgba(120, 64, 210, 0.13);
-  backdrop-filter: blur(15px);
 }
 
 .assistant-panel {
@@ -1876,10 +1882,9 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
   padding: 0.5rem 0.7rem;
-  background: rgba(69, 28, 130, 0.58);
+  background: rgba(69, 28, 130, 0.94);
   color: #b8a9c5;
   font-size: 0.48rem;
-  backdrop-filter: blur(10px);
 }
 
 .assistant-watch i {
@@ -1950,9 +1955,8 @@ button {
 .transaction-project,
 .transaction-result {
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(25, 8, 96, 0.79);
+  background: rgba(25, 8, 96, 0.96);
   box-shadow: 0 0.7rem 1.6rem rgba(9, 4, 65, 0.25);
-  backdrop-filter: blur(12px);
 }
 
 .transaction-progress {
@@ -2427,15 +2431,18 @@ button {
   }
 
   .feature-card-left {
-    left: -42%;
+    left: -4%;
     width: 22rem;
     opacity: 0.28;
+    transform: translate(-50%, -38%) rotate(-23deg);
   }
 
   .feature-card-right {
-    right: -44%;
+    right: auto;
+    left: 104%;
     width: 22rem;
     opacity: 0.26;
+    transform: translate(-50%, -38%) rotate(23deg);
   }
 
   .feature-stage .showcase-caption {
