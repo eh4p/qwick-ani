@@ -1,6 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import dynamic from "next/dynamic";
+
+const PremiumExperience = dynamic(() => import("./components/premium-experience"), {
+  ssr: false,
+  loading: () => null,
+});
 
 const industries = [
   ["HOTELS & RESTAURANTS", "Reservations made easy, intelligent pre and post booking support and more!"],
@@ -283,6 +289,7 @@ export default function Home() {
   return (
     <main className="lia-page">
       <div className={`preloader${loaded ? " hidden" : ""}`}><img src="/lia/favicon.svg" alt="LIA" /><span><i /></span></div>
+      <PremiumExperience />
       <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} toggleTheme={toggleTheme} />
 
       <section id="hero" className="hero">
