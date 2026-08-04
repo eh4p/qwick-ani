@@ -596,6 +596,7 @@ function PortfolioContent() {
           });
 
           featureTimeline
+            .set(".feature-card-position", { xPercent: -50, yPercent: -50 }, 0)
             .set(".feature-card-center", { zIndex: 4 }, 0)
             .set([".feature-card-left", ".feature-card-right"], { zIndex: 1 }, 0)
             .fromTo(".outline-type", { scale: 0.46, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.85, ease: "power2.out" }, 0)

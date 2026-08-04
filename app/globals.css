@@ -1712,8 +1712,9 @@ button {
 
 .feature-card-position {
   position: absolute;
-  top: 45%;
+  top: 44%;
   left: 50%;
+  width: clamp(22rem, 25vw, 30rem);
   contain: layout paint;
   isolation: isolate;
   transform: translate(-50%, -50%);
@@ -1722,18 +1723,12 @@ button {
 }
 
 .feature-card-left {
-  width: clamp(22rem, 28vw, 34rem);
   transform-origin: center;
   opacity: 0.54;
 }
 
-.feature-card-center {
-  width: clamp(22rem, 25vw, 30rem);
-}
-
 .feature-card-right {
   right: auto;
-  width: clamp(22rem, 29vw, 35rem);
   transform-origin: center;
   opacity: 0.5;
 }
