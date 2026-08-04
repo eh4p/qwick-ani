@@ -585,11 +585,12 @@ function PortfolioContent() {
           .to(".hero-core", { scale: 2.2, z: 800, opacity: 0, filter: "blur(16px)", ease: "none" }, 0)
           .to(".hero-disciplines", { scale: 1.45, z: 520, opacity: 0, ease: "none" }, 0);
 
-        media.add("(min-width: 801px)", () => {
-          const orbitX = window.innerWidth * 0.46;
-          const orbitY = window.innerHeight * 0.14;
-          const orbitApex = window.innerHeight * -0.1;
-          const orbitUnderside = window.innerHeight * 0.5;
+        media.add({ mobile: "(max-width: 800px)", desktop: "(min-width: 801px)" }, ({ conditions }) => {
+          const isMobile = conditions?.mobile ?? false;
+          const orbitX = window.innerWidth * (isMobile ? 0.64 : 0.46);
+          const orbitY = window.innerHeight * (isMobile ? 0.08 : 0.14);
+          const orbitApex = window.innerHeight * (isMobile ? -0.06 : -0.1);
+          const orbitUnderside = window.innerHeight * (isMobile ? 0.38 : 0.5);
           const featureTimeline = gsap.timeline({
             defaults: { force3D: false },
             scrollTrigger: { trigger: ".work-intro", start: "top top", end: "bottom bottom", scrub: 1.15 },
