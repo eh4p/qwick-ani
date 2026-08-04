@@ -4,12 +4,15 @@ import { animated, to as springTo, useSpring as useReactSpring } from "@react-sp
 import { Alignment, Fit, Layout, RuntimeLoader, useRive } from "@rive-app/react-canvas";
 import { getProject, types } from "@theatre/core";
 import { gsap } from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Lottie from "lottie-react";
 import { motion, useScroll, useSpring as useMotionSpring, useTransform } from "motion/react";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+import { WEBGL_SUPPORTED } from "@/app/lib/webgl-supported";
 
 function NeuralFallback() {
   return (
@@ -131,7 +134,6 @@ function RiveActor() {
 }
 
 export default function PremiumExperience() {
-  const [webglSupported, setWebglSupported] = useState(false);
   const { scrollYProgress } = useScroll();
   const progress = useMotionSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.24 });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.07], [1, 0]);
@@ -145,18 +147,7 @@ export default function PremiumExperience() {
   }));
 
   useEffect(() => {
-    try {
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("webgl2") || canvas.getContext("webgl");
-      setWebglSupported(Boolean(context));
-      context?.getExtension("WEBGL_lose_context")?.loseContext();
-    } catch {
-      setWebglSupported(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
     const theatreProject = getProject("LIA Premium Runtime v2", { state: theatreState });
     const atmosphere = theatreProject.sheet("Cinematic Atmosphere").object("Atmosphere", {
@@ -239,6 +230,45 @@ export default function PremiumExperience() {
         { y: 45, opacity: 0 },
         { y: 0, opacity: 1, duration: 1.15, ease: "power3.out", scrollTrigger: { trigger: "#testimonials", start: "top 75%" } },
       );
+      const trustedLogos = gsap.utils.toArray<HTMLElement>(".client-logo");
+      const compactTrustedScene = window.matchMedia("(max-width: 760px)").matches;
+      const trustedTimeline = gsap.timeline({
+        scrollTrigger: compactTrustedScene
+          ? { trigger: ".trusted-scene", start: "top 88%", end: "bottom 12%", scrub: 1.15 }
+          : { trigger: "#features", start: "56% top", end: "bottom bottom", scrub: 1.15 },
+      });
+      trustedLogos.forEach((logo, index) => {
+        const endpoint = 0.76 + (index / Math.max(1, trustedLogos.length - 1)) * 0.234;
+        trustedTimeline.fromTo(
+          logo,
+          { autoAlpha: 0, scale: 0.58 },
+          {
+            autoAlpha: 0.82,
+            scale: 1,
+            duration: 1.25,
+            ease: "none",
+            motionPath: {
+              path: ".trusted-orbit-path",
+              align: ".trusted-orbit-path",
+              alignOrigin: [0.5, 0.5],
+              start: 0,
+              end: endpoint,
+            },
+          },
+          index * 0.055,
+        );
+      });
+      trustedTimeline.fromTo(
+        ".trusted-word",
+        { autoAlpha: 0, y: 22, filter: "blur(11px)" },
+        { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.36, stagger: 0.06, ease: "power2.out" },
+        0.3,
+      );
+      trustedTimeline.to(
+        ".trusted-word",
+        { autoAlpha: 0, y: -14, filter: "blur(9px)", duration: 0.24, stagger: 0.025, ease: "power1.in" },
+        1.12,
+      );
       gsap.to(cinema, {
         bloom: 0.92,
         hue: 24,
@@ -269,7 +299,7 @@ export default function PremiumExperience() {
   return (
     <>
       <motion.div className="premium-webgl-layer" style={{ opacity: heroOpacity, scale: heroScale }} aria-hidden="true">
-        {webglSupported ? <NeuralCanvas /> : <NeuralFallback />}
+        {WEBGL_SUPPORTED ? <NeuralCanvas /> : <NeuralFallback />}
       </motion.div>
       <motion.div className="rive-intelligence" style={{ opacity: heroOpacity, y: actorY }}>
         <RiveActor />

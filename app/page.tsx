@@ -8,6 +8,11 @@ const PremiumExperience = dynamic(() => import("./components/premium-experience"
   loading: () => null,
 });
 
+const FooterSpaceCanvas = dynamic(() => import("./components/footer-space-canvas"), {
+  ssr: false,
+  loading: () => <div className="space-earth-fallback" aria-hidden="true"><i /><i /><i /></div>,
+});
+
 const industries = [
   ["HOTELS & RESTAURANTS", "Reservations made easy, intelligent pre and post booking support and more!"],
   ["HEALTHCARE", "Effortless appointment bookings, patient record management, and smart FAQ handling!"],
@@ -339,7 +344,14 @@ export default function Home() {
             ))}
           </div>
           <div className="trusted-scene">
-            <h2>Trusted by teams that<br />value exceptional<br />digital experiences.</h2>
+            <h2 aria-label="Trusted by teams that value exceptional digital experiences.">
+              <span className="trusted-line" aria-hidden="true"><span className="trusted-word">Trusted</span> <span className="trusted-word">by</span> <span className="trusted-word">teams</span> <span className="trusted-word">that</span></span>
+              <span className="trusted-line" aria-hidden="true"><span className="trusted-word">value</span> <span className="trusted-word">exceptional</span></span>
+              <span className="trusted-line" aria-hidden="true"><span className="trusted-word">digital</span> <span className="trusted-word">experiences.</span></span>
+            </h2>
+            <svg className="trusted-orbit-guide" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+              <path className="trusted-orbit-path" d="M -120 665 C 60 660 105 610 105 525 C 105 315 195 110 420 80 C 690 42 895 160 912 350 C 930 535 765 630 540 636 C 345 642 165 625 -120 690" />
+            </svg>
             <div className="logo-cloud">
               {[1, 2, 3, 4, 5, 6, 7].map((logo, index) => <img key={logo} src={`/lia/logo/${logo}.svg`} alt="Trusted LIA client" className={`client-logo logo-${index + 1}`} />)}
               <img src="/lia/logo/hnb-life.png" alt="HNB Life" className="client-logo logo-8" />
@@ -424,8 +436,8 @@ export default function Home() {
 
       <section id="contact" className="contact-section">
         <div className="stars" aria-hidden="true">{Array.from({ length: 42 }, (_, index) => <i key={index} style={{ "--x": `${(index * 37) % 100}%`, "--y": `${(index * 61) % 76}%`, "--delay": `${(index % 8) * -0.4}s` } as CSSProperties} />)}</div>
+        <FooterSpaceCanvas />
         <div className="contact-copy"><span>✦ · Start</span><h2>Where clarity<br />becomes progress.</h2><p>From pricing to features, here are the answers to common<br />questions about LIA</p><a href="mailto:hello@lialive.ai">Start your journey</a></div>
-        <div className="planet"><div className="planet-lines" /></div>
         <footer className="site-footer">
           <div><img src="/lia/lia.svg" alt="LIA" /><p>Built with clarity. Designed for flow.</p><a href="#">Privacy Policy</a></div>
           <nav><div><b>Product</b><a href="#hero">Home</a><a href="#features">Feature</a><a href="#roi-calculator">ROI Calculator</a><a href="#testimonials">Testimonials</a></div><div><b>Company</b><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Press</a></div></nav>
