@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Image from "next/image";
@@ -87,6 +88,14 @@ const promises = [
   },
 ];
 
+const featuredCaptions = [
+  ["AION Pulse", "Your daily performance watch, tuned for training, recovery, and everything between.", "FROM $349"],
+  ["AION Sense", "A calm, personal health companion that turns live signals into useful guidance.", "FROM $399"],
+  ["AION Ultra", "Rugged titanium, dual-band navigation, and fourteen days of expedition-ready power.", "FROM $599"],
+  ["AION Air", "Our lightest watch, designed for effortless all-day comfort and deeper nights.", "FROM $299"],
+  ["AION Coach", "Adaptive goals and timely prompts that meet your energy instead of fighting it.", "INCLUDED WITH AION"],
+];
+
 function ArrowIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -99,6 +108,14 @@ function BagIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M5 8.5h14l-1 11H6l-1-11ZM9 9V6.5a3 3 0 0 1 6 0V9" />
+    </svg>
+  );
+}
+
+function ActivityIcon() {
+  return (
+    <svg viewBox="0 0 28 28" aria-hidden="true">
+      <path d="M3 15h5l2.5-7 5 13 3-9 2 3H25" />
     </svg>
   );
 }
@@ -125,6 +142,7 @@ function Header({ cartCount }: { cartCount: number }) {
       >
         <Brand />
         <div className="desktop-nav" aria-label="Primary navigation">
+          <a href="#featured">FEATURED</a>
           <a href="#shop">WATCHES</a>
           <a href="#features">TECHNOLOGY</a>
           <a href="#service">WHY AION</a>
@@ -163,9 +181,10 @@ function Header({ cartCount }: { cartCount: number }) {
               <nav aria-label="Menu navigation">
                 {[
                   ["01", "Discover", "#top"],
-                  ["02", "Shop watches", "#shop"],
-                  ["03", "Technology", "#features"],
-                  ["04", "Our promise", "#service"],
+                  ["02", "Featured", "#featured"],
+                  ["03", "Shop watches", "#shop"],
+                  ["04", "Technology", "#features"],
+                  ["05", "Our promise", "#service"],
                 ].map(([number, label, href]) => (
                   <a key={href} href={href} onClick={() => setMenuOpen(false)}>
                     <span>{number}</span>
@@ -310,6 +329,138 @@ function Discover() {
         <BatteryFeatureCard />
         <HealthFeatureCard />
         <ServiceFeatureCard />
+      </div>
+    </section>
+  );
+}
+
+function CoachFeaturedCard() {
+  return (
+    <div className="lia-feature-card lia-assistant-card">
+      <div className="lia-glass-panel assistant-panel">
+        <div className="assistant-label"><span className="assistant-logo">A</span> AION · Coach</div>
+        <p>Your recovery is trending up. Ready for a focused 32-minute run?</p>
+        <div className="assistant-thinking"><i /><i /><i /></div>
+        <div className="assistant-actions">
+          <span><b>◇</b> Start workout</span>
+          <span><b>▧</b> View readiness</span>
+          <span><b>✣</b> Adjust goal</span>
+        </div>
+        <div className="assistant-input"><b>＋</b><span>Ask AION anything…</span><i>⌘</i></div>
+      </div>
+      <div className="assistant-watch"><i>▶</i> Start session</div>
+      <div className="assistant-code-orb"><ActivityIcon /></div>
+    </div>
+  );
+}
+
+function PulseFeaturedCard() {
+  return (
+    <div className="lia-feature-card lia-transaction-card">
+      <div className="transaction-sheen" />
+      <div className="transaction-content">
+        <div className="transaction-progress">
+          {["Move", "Train", "Recover", "Repeat"].map((step, index) => (
+            <span className={`transaction-step step-${index + 1}`} key={step}>
+              <i>{index === 0 ? "✓" : ""}</i>{step}<b />
+            </span>
+          ))}
+        </div>
+        <div className="transaction-project">
+          <span className="project-thumbnail"><i /><i /><i /></span>
+          <span><small>FEATURED WATCH</small><strong>AION Pulse · Titanium</strong><em>45 mm&nbsp;&nbsp; · &nbsp;&nbsp;7-day battery</em></span>
+        </div>
+        <div className="transaction-result">
+          <span><i /> Ready to ship</span><strong>$349</strong>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SenseFeaturedCard() {
+  return (
+    <div className="lia-feature-card lia-language-card">
+      <div className="language-panel">
+        <div className="language-status"><i /> AION · Reading your rhythm</div>
+        <div className="language-detected"><span>◆</span><b>Recovery</b><small>OPTIMAL</small></div>
+        <div className="language-message user-message">How is my energy looking today?</div>
+        <div className="language-reply"><span>A</span><p><small>AION SENSE</small>You recovered well. Your best training window begins at 5:30 PM.</p></div>
+        <div className="language-tags">Heart rate · Sleep · Temperature · Stress · Oxygen · Readiness</div>
+      </div>
+    </div>
+  );
+}
+
+function UltraFeaturedCard() {
+  return (
+    <div className="lia-feature-card lia-transaction-card lia-ultra-card">
+      <div className="transaction-sheen" />
+      <div className="transaction-content">
+        <div className="transaction-progress">
+          {["Plan", "Climb", "Navigate", "Return"].map((step, index) => (
+            <span className={`transaction-step step-${index + 1}`} key={step}>
+              <i>{index === 0 ? "✓" : ""}</i>{step}<b />
+            </span>
+          ))}
+        </div>
+        <div className="transaction-project">
+          <span className="project-thumbnail ultra-thumbnail"><i /><i /><i /></span>
+          <span><small>ADVENTURE EDITION</small><strong>AION Ultra · Graphite</strong><em>Dual-band GPS&nbsp;&nbsp; · &nbsp;&nbsp;100 m water resistant</em></span>
+        </div>
+        <div className="transaction-result">
+          <span><i /> Expedition ready</span><strong>14 DAYS</strong>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AirFeaturedCard() {
+  return (
+    <div className="lia-feature-card lia-assistant-card lia-air-card">
+      <div className="lia-glass-panel assistant-panel">
+        <div className="assistant-label"><span className="assistant-logo">A</span> AION Air · Sleep</div>
+        <p>You slept 7h 48m with a steady heart rate and strong deep-sleep recovery.</p>
+        <div className="assistant-thinking"><i /><i /><i /></div>
+        <div className="assistant-actions">
+          <span><b>◇</b> Sleep score 87</span>
+          <span><b>▧</b> Resting HR 54</span>
+          <span><b>✣</b> 3 insights</span>
+        </div>
+        <div className="assistant-input"><b>＋</b><span>View your sleep timeline</span><i>↗</i></div>
+      </div>
+      <div className="assistant-watch"><i>✓</i> Morning report</div>
+      <div className="assistant-code-orb"><ActivityIcon /></div>
+    </div>
+  );
+}
+
+function FeaturedProducts() {
+  return (
+    <section className="featured-products" id="featured">
+      <div className="featured-stage">
+        <div className="outline-type" aria-hidden="true">
+          <span>FEATURED</span><span>PRODUCTS</span>
+        </div>
+        <div className="feature-vignette" />
+        <div className="featured-card-scene">
+          <div className="featured-card-position"><PulseFeaturedCard /></div>
+          <div className="featured-card-position"><SenseFeaturedCard /></div>
+          <div className="featured-card-position"><UltraFeaturedCard /></div>
+          <div className="featured-card-position"><AirFeaturedCard /></div>
+          <div className="featured-card-position"><CoachFeaturedCard /></div>
+        </div>
+        <div className="featured-captions">
+          {featuredCaptions.map(([title, body, detail], index) => (
+            <div className={`featured-caption-copy ${index === 0 ? "is-active" : ""}`} key={title}>
+              <h2>{title}</h2>
+              <div className="caption-signal"><i /><i /><i /></div>
+              <p>{body}</p>
+              <a className="featured-text-link" href="#shop">{detail} <ArrowIcon /></a>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -479,7 +630,7 @@ function PortfolioContent() {
   };
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
     const lenis = new Lenis({ duration: 1.05, smoothWheel: true, wheelMultiplier: 0.9 });
     let frame = 0;
@@ -509,6 +660,108 @@ function PortfolioContent() {
         gsap.fromTo(".feature-card-track", { xPercent: 18 }, {
           xPercent: -7, ease: "none",
           scrollTrigger: { trigger: ".discover", start: "top bottom", end: "bottom top", scrub: 1.1 },
+        });
+
+        media.add({ mobile: "(max-width: 800px)", desktop: "(min-width: 801px)" }, ({ conditions }) => {
+          const isMobile = conditions?.mobile ?? false;
+          const orbitX = window.innerWidth * (isMobile ? 0.62 : 0.46);
+          const orbitY = window.innerHeight * (isMobile ? 0.07 : 0.13);
+          const orbitApex = window.innerHeight * (isMobile ? -0.04 : -0.1);
+          const orbitUnderside = window.innerHeight * (isMobile ? 0.32 : 0.46);
+          const cards = gsap.utils.toArray<HTMLElement>(".featured-card-position");
+          const captions = gsap.utils.toArray<HTMLElement>(".featured-caption-copy");
+          const slots = [
+            { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1, zIndex: 4 },
+            { x: -orbitX, y: orbitY, rotation: -24, scale: 0.82, opacity: 0.54, zIndex: 2 },
+            { x: -orbitX * 0.28, y: orbitUnderside, rotation: -8, scale: 0.42, opacity: 0.06, zIndex: 1 },
+            { x: orbitX * 0.28, y: orbitUnderside, rotation: 8, scale: 0.42, opacity: 0.06, zIndex: 1 },
+            { x: orbitX, y: orbitY, rotation: 24, scale: 0.82, opacity: 0.5, zIndex: 2 },
+          ];
+          const initialSlots = [0, 4, 3, 2, 1];
+          gsap.set(cards, { xPercent: -50, yPercent: -50 });
+          gsap.set(captions.slice(1), { autoAlpha: 0, y: 18 });
+
+          const featuredIntro = gsap.timeline({
+            defaults: { force3D: false },
+            scrollTrigger: {
+              trigger: ".featured-products",
+              start: "top bottom",
+              end: "top top",
+              scrub: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          featuredIntro.fromTo(".featured-stage .outline-type", { scale: 0.46, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.85, ease: "power2.out" }, 0);
+
+          cards.forEach((card, index) => {
+            const target = slots[initialSlots[index]];
+            featuredIntro.fromTo(card, {
+              x: target.x,
+              y: target.y,
+              rotation: target.rotation,
+              scale: 0.12,
+              opacity: 0,
+              zIndex: target.zIndex,
+            }, {
+              ...target,
+              duration: 1,
+              ease: "power2.out",
+            }, index === 0 ? 0.02 : 0.12);
+          });
+
+          featuredIntro
+            .fromTo(captions[0], { scale: 0.5, z: -900, opacity: 0 }, { scale: 1, z: 0, opacity: 1, duration: 0.62, ease: "power2.out" }, 0.32)
+            .fromTo(".featured-stage .transaction-step i", { scale: 0.5 }, { scale: 1.18, backgroundColor: "#c9ff3f", stagger: 0.08, yoyo: true, repeat: 1, duration: 0.16 }, 0.62);
+
+          const featuredTimeline = gsap.timeline({
+            defaults: { force3D: false },
+            scrollTrigger: {
+              trigger: ".featured-products",
+              start: "top top",
+              end: "+=500%",
+              pin: true,
+              scrub: 1.15,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          const pathsForMove = (from: number, to: number) => {
+            if (from === 0 && to === 1) return [{ x: 0, y: 0 }, { x: -orbitX * 0.52, y: orbitApex }, { x: -orbitX, y: orbitY }];
+            if (from === 4 && to === 0) return [{ x: orbitX, y: orbitY }, { x: orbitX * 0.52, y: orbitApex }, { x: 0, y: 0 }];
+            if (from === 1 && to === 2) return [{ x: -orbitX, y: orbitY }, { x: -orbitX * 0.62, y: orbitUnderside * 0.72 }, { x: -orbitX * 0.28, y: orbitUnderside }];
+            if (from === 2 && to === 3) return [{ x: -orbitX * 0.28, y: orbitUnderside }, { x: 0, y: orbitUnderside * 1.08 }, { x: orbitX * 0.28, y: orbitUnderside }];
+            return [{ x: orbitX * 0.28, y: orbitUnderside }, { x: orbitX * 0.62, y: orbitUnderside * 0.72 }, { x: orbitX, y: orbitY }];
+          };
+
+          for (let step = 0; step < 4; step += 1) {
+            const time = 0.18 + step * 1.02;
+            cards.forEach((card, cardIndex) => {
+              const currentSlot = (initialSlots[cardIndex] + step) % 5;
+              const nextSlot = (currentSlot + 1) % 5;
+              const target = slots[nextSlot];
+              featuredTimeline
+                .set(card, { zIndex: target.zIndex }, time)
+                .to(card, {
+                  motionPath: { path: pathsForMove(currentSlot, nextSlot), curviness: 2 },
+                  rotation: target.rotation,
+                  scale: target.scale,
+                  opacity: target.opacity,
+                  duration: 0.92,
+                  ease: "power1.inOut",
+                }, time);
+            });
+
+            featuredTimeline
+              .to(captions[step], { autoAlpha: 0, y: -18, duration: 0.22, ease: "power1.in" }, time + 0.16)
+              .fromTo(captions[step + 1], { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, time + 0.48);
+          }
+
+          featuredTimeline
+            .to(".featured-card-scene", { scale: 1.58, opacity: 0, duration: 0.9, ease: "power2.in" }, 4.28)
+            .to(".featured-captions", { scale: 1.38, z: 520, opacity: 0, filter: "blur(12px)", duration: 0.7, ease: "power2.in" }, 4.4)
+            .to(".featured-stage .outline-type", { scale: 1.24, opacity: 0, duration: 0.7, ease: "power2.in" }, 4.4);
         });
 
         gsap.utils.toArray<HTMLElement>(".product-card").forEach((card) => {
@@ -554,6 +807,7 @@ function PortfolioContent() {
       <Header cartCount={cartCount} />
       <Hero />
       <Discover />
+      <FeaturedProducts />
       <Products onAdd={addToBag} />
       <Features />
       <PromiseSection />
