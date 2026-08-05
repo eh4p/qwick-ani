@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ehab — Software Engineer",
+  title: "AION — Smartwatches for Life in Motion",
   description:
-    "Ehab is a software engineer crafting thoughtful digital products, resilient systems, and memorable web experiences.",
+    "Shop AION smartwatches for fitness, recovery, health insights, and everyday connection.",
 };
 
 export default function RootLayout({
