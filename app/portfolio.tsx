@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Image from "next/image";
@@ -117,6 +118,14 @@ const expertise = [
   "Docker",
   "OpenAI",
   "Figma",
+];
+
+const systemCaptions = [
+  ["Platform engineering", "Secure, composable foundations designed for real users, real load, and the next stage of growth.", "BUILD THE FOUNDATION"],
+  ["Experience design", "Complex workflows shaped into clear, useful interfaces that feel effortless from the first click.", "DESIGN THE EXPERIENCE"],
+  ["AI automation", "Practical intelligence embedded into the work—removing repetition while keeping people in control.", "AUTOMATE THE RIGHT WORK"],
+  ["Scale & support", "Performance, observability, and continuous improvement long after the first release goes live.", "KEEP MOVING FORWARD"],
+  ["Product strategy", "Evidence, priorities, and a focused roadmap that turns an ambitious idea into a buildable product.", "SHAPE THE PRODUCT"],
 ];
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
@@ -356,6 +365,147 @@ function Services() {
   );
 }
 
+function SystemsPulseIcon() {
+  return (
+    <svg viewBox="0 0 28 28" aria-hidden="true">
+      <path d="M3 15h5l2.5-7 5 13 3-9 2 3H25" />
+    </svg>
+  );
+}
+
+function PlatformSystemCard() {
+  return (
+    <div className="lia-feature-card lia-transaction-card lia-platform-card">
+      <div className="transaction-sheen" />
+      <div className="transaction-content">
+        <div className="transaction-progress">
+          {["Model", "Build", "Integrate", "Deploy"].map((step, index) => (
+            <span className={`transaction-step step-${index + 1}`} key={step}>
+              <i>{index === 0 ? "✓" : ""}</i>{step}<b />
+            </span>
+          ))}
+        </div>
+        <div className="transaction-project">
+          <span className="system-thumbnail platform-thumbnail"><i /><i /><i /></span>
+          <span><small>CORE PLATFORM</small><strong>Scalable application architecture</strong><em>TypeScript&nbsp;&nbsp; · &nbsp;&nbsp;APIs&nbsp;&nbsp; · &nbsp;&nbsp;Cloud</em></span>
+        </div>
+        <div className="transaction-result">
+          <span><i /> Production ready</span><strong>BUILT TO SCALE</strong>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ExperienceSystemCard() {
+  return (
+    <div className="lia-feature-card lia-language-card lia-experience-card">
+      <div className="language-panel">
+        <div className="language-status"><i /> QRFDS · Product design review</div>
+        <div className="language-detected"><span>◆</span><b>Core workflow</b><small>SIMPLIFIED</small></div>
+        <div className="language-message">The primary workflow still feels too complex.</div>
+        <div className="language-reply"><span>Q</span><p><small>QRFDS DESIGN</small>We reduced it to three clear steps and kept advanced controls in context.</p></div>
+        <div className="language-tags">Research · UX · Prototyping · UI · Design systems · Testing</div>
+      </div>
+    </div>
+  );
+}
+
+function AutomationSystemCard() {
+  return (
+    <div className="lia-feature-card lia-assistant-card lia-automation-card">
+      <div className="lia-glass-panel assistant-panel">
+        <div className="assistant-label"><span className="assistant-logo">Q</span> QRFDS · Workflow intelligence</div>
+        <p>Three repetitive approval steps can be safely automated with a human review checkpoint.</p>
+        <div className="assistant-thinking"><i /><i /><i /></div>
+        <div className="assistant-actions">
+          <span><b>◇</b> Map workflow</span>
+          <span><b>▧</b> Add guardrails</span>
+          <span><b>✣</b> Review output</span>
+        </div>
+        <div className="assistant-input"><b>＋</b><span>Describe your next workflow…</span><i>⌘</i></div>
+      </div>
+      <div className="assistant-watch"><i>↗</i> Automation ready</div>
+      <div className="assistant-code-orb"><SystemsPulseIcon /></div>
+    </div>
+  );
+}
+
+function ScaleSystemCard() {
+  return (
+    <div className="lia-feature-card lia-assistant-card lia-scale-card">
+      <div className="lia-glass-panel assistant-panel">
+        <div className="assistant-label"><span className="assistant-logo">Q</span> QRFDS · Live operations</div>
+        <p>Demand is climbing while response times remain steady across every critical service.</p>
+        <div className="assistant-thinking"><i /><i /><i /></div>
+        <div className="assistant-actions">
+          <span><b>◇</b> Healthy systems</span>
+          <span><b>▧</b> Stable latency</span>
+          <span><b>✣</b> Live insights</span>
+        </div>
+        <div className="assistant-input"><b>＋</b><span>View system health</span><i>↗</i></div>
+      </div>
+      <div className="assistant-watch"><i>✓</i> All systems healthy</div>
+      <div className="assistant-code-orb"><SystemsPulseIcon /></div>
+    </div>
+  );
+}
+
+function StrategySystemCard() {
+  return (
+    <div className="lia-feature-card lia-transaction-card lia-strategy-card">
+      <div className="transaction-sheen" />
+      <div className="transaction-content">
+        <div className="transaction-progress">
+          {["Discover", "Shape", "Prototype", "Validate"].map((step, index) => (
+            <span className={`transaction-step step-${index + 1}`} key={step}>
+              <i>{index === 0 ? "✓" : ""}</i>{step}<b />
+            </span>
+          ))}
+        </div>
+        <div className="transaction-project">
+          <span className="system-thumbnail strategy-thumbnail"><i /><i /><i /></span>
+          <span><small>PRODUCT BLUEPRINT</small><strong>One clear path from idea to launch</strong><em>Evidence&nbsp;&nbsp; · &nbsp;&nbsp;Priorities&nbsp;&nbsp; · &nbsp;&nbsp;Roadmap</em></span>
+        </div>
+        <div className="transaction-result">
+          <span><i /> Direction aligned</span><strong>READY TO BUILD</strong>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SystemsShowcase() {
+  return (
+    <section className="featured-products" id="systems" aria-label="QRFDS systems in motion">
+      <div className="featured-stage">
+        <div className="systems-kicker"><span>QRFDS / SYSTEMS IN MOTION</span><i>SCROLL TO ROTATE</i></div>
+        <div className="outline-type" aria-hidden="true">
+          <span>DIGITAL</span><span>SYSTEMS</span>
+        </div>
+        <div className="feature-vignette" />
+        <div className="featured-card-scene">
+          <div className="featured-card-position"><PlatformSystemCard /></div>
+          <div className="featured-card-position"><ExperienceSystemCard /></div>
+          <div className="featured-card-position"><AutomationSystemCard /></div>
+          <div className="featured-card-position"><ScaleSystemCard /></div>
+          <div className="featured-card-position"><StrategySystemCard /></div>
+        </div>
+        <div className="featured-captions">
+          {systemCaptions.map(([title, body, detail], index) => (
+            <div className={`featured-caption-copy ${index === 0 ? "is-active" : ""}`} key={title}>
+              <h2>{title}</h2>
+              <div className="caption-signal"><i /><i /><i /></div>
+              <p>{body}</p>
+              <a className="featured-text-link" href="#contact">{detail} <Arrow /></a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Work() {
   return (
     <section className="work" id="work">
@@ -568,7 +718,7 @@ function PortfolioContent() {
   const root = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let lenis: Lenis | null = null;
@@ -640,6 +790,113 @@ function PortfolioContent() {
           }
         });
 
+        media.add({ mobile: "(max-width: 800px)", desktop: "(min-width: 801px)" }, ({ conditions }) => {
+          const isMobile = conditions?.mobile ?? false;
+          const orbitX = window.innerWidth * (isMobile ? 0.6 : 0.46);
+          const orbitY = window.innerHeight * (isMobile ? 0.06 : 0.13);
+          const orbitApex = window.innerHeight * (isMobile ? -0.03 : -0.1);
+          const orbitUnderside = window.innerHeight * (isMobile ? 0.3 : 0.46);
+          const cards = gsap.utils.toArray<HTMLElement>(".featured-card-position");
+          const captions = gsap.utils.toArray<HTMLElement>(".featured-caption-copy");
+          const slots = [
+            { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1, zIndex: 4 },
+            { x: -orbitX, y: orbitY, rotation: -24, scale: 0.82, opacity: 0.5, zIndex: 2 },
+            { x: -orbitX * 0.28, y: orbitUnderside, rotation: -8, scale: 0.42, opacity: 0.06, zIndex: 1 },
+            { x: orbitX * 0.28, y: orbitUnderside, rotation: 8, scale: 0.42, opacity: 0.06, zIndex: 1 },
+            { x: orbitX, y: orbitY, rotation: 24, scale: 0.82, opacity: 0.48, zIndex: 2 },
+          ];
+          const initialSlots = [0, 4, 3, 2, 1];
+          gsap.set(cards, { xPercent: -50, yPercent: -50 });
+          gsap.set(captions.slice(1), { autoAlpha: 0, y: 18 });
+
+          const featuredIntro = gsap.timeline({
+            defaults: { force3D: false },
+            scrollTrigger: {
+              trigger: ".featured-products",
+              start: "top bottom",
+              end: "top top",
+              scrub: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          featuredIntro.fromTo(
+            ".featured-stage .outline-type",
+            { scale: 0.46, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.85, ease: "power2.out" },
+            0,
+          );
+
+          cards.forEach((card, index) => {
+            const target = slots[initialSlots[index]];
+            featuredIntro.fromTo(card, {
+              x: target.x,
+              y: target.y,
+              rotation: target.rotation,
+              scale: 0.12,
+              opacity: 0,
+              zIndex: target.zIndex,
+            }, {
+              ...target,
+              duration: 1,
+              ease: "power2.out",
+            }, index === 0 ? 0.02 : 0.12);
+          });
+
+          featuredIntro
+            .fromTo(captions[0], { scale: 0.5, z: -900, opacity: 0 }, { scale: 1, z: 0, opacity: 1, duration: 0.62, ease: "power2.out" }, 0.32)
+            .fromTo(".featured-stage .transaction-step i", { scale: 0.5 }, { scale: 1.18, backgroundColor: "#c8ff52", stagger: 0.08, yoyo: true, repeat: 1, duration: 0.16 }, 0.62);
+
+          const featuredTimeline = gsap.timeline({
+            defaults: { force3D: false },
+            scrollTrigger: {
+              trigger: ".featured-products",
+              start: "top top",
+              end: isMobile ? "+=420%" : "+=500%",
+              pin: true,
+              scrub: 1.15,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          const pathsForMove = (from: number, to: number) => {
+            if (from === 0 && to === 1) return [{ x: 0, y: 0 }, { x: -orbitX * 0.52, y: orbitApex }, { x: -orbitX, y: orbitY }];
+            if (from === 4 && to === 0) return [{ x: orbitX, y: orbitY }, { x: orbitX * 0.52, y: orbitApex }, { x: 0, y: 0 }];
+            if (from === 1 && to === 2) return [{ x: -orbitX, y: orbitY }, { x: -orbitX * 0.62, y: orbitUnderside * 0.72 }, { x: -orbitX * 0.28, y: orbitUnderside }];
+            if (from === 2 && to === 3) return [{ x: -orbitX * 0.28, y: orbitUnderside }, { x: 0, y: orbitUnderside * 1.08 }, { x: orbitX * 0.28, y: orbitUnderside }];
+            return [{ x: orbitX * 0.28, y: orbitUnderside }, { x: orbitX * 0.62, y: orbitUnderside * 0.72 }, { x: orbitX, y: orbitY }];
+          };
+
+          for (let step = 0; step < 4; step += 1) {
+            const time = 0.18 + step * 1.02;
+            cards.forEach((card, cardIndex) => {
+              const currentSlot = (initialSlots[cardIndex] + step) % 5;
+              const nextSlot = (currentSlot + 1) % 5;
+              const target = slots[nextSlot];
+              featuredTimeline
+                .set(card, { zIndex: target.zIndex }, time)
+                .to(card, {
+                  motionPath: { path: pathsForMove(currentSlot, nextSlot), curviness: 2 },
+                  rotation: target.rotation,
+                  scale: target.scale,
+                  opacity: target.opacity,
+                  duration: 0.92,
+                  ease: "power1.inOut",
+                }, time);
+            });
+
+            featuredTimeline
+              .to(captions[step], { autoAlpha: 0, y: -18, duration: 0.22, ease: "power1.in" }, time + 0.16)
+              .fromTo(captions[step + 1], { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, time + 0.48);
+          }
+
+          featuredTimeline
+            .to(".featured-card-scene", { scale: 1.58, opacity: 0, duration: 0.9, ease: "power2.in" }, 4.28)
+            .to(".featured-captions", { scale: 1.38, z: 520, opacity: 0, filter: "blur(12px)", duration: 0.7, ease: "power2.in" }, 4.4)
+            .to(".featured-stage .outline-type", { scale: 1.24, opacity: 0, duration: 0.7, ease: "power2.in" }, 4.4);
+        });
+
         media.add("(min-width: 901px)", () => {
           const panels = gsap.utils.toArray<HTMLElement>(".work-panel");
           const dots = gsap.utils.toArray<HTMLElement>(".work-counter i");
@@ -704,6 +961,7 @@ function PortfolioContent() {
       <SignalStrip />
       <Introduction />
       <Services />
+      <SystemsShowcase />
       <Work />
       <WhyQrfds />
       <Process />
