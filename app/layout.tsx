@@ -13,9 +13,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AION — Smartwatches for Life in Motion",
+  title: "QRFDS — Software, engineered for what’s next",
   description:
-    "Shop AION smartwatches for fitness, recovery, health insights, and everyday connection.",
+    "QRFDS is a software company designing and engineering ambitious web, mobile, SaaS, cloud, and AI products.",
+  metadataBase: new URL("https://qrfds.com"),
+  openGraph: {
+    title: "QRFDS — Software, engineered for what’s next",
+    description:
+      "Strategy, design, and engineering for ambitious digital products.",
+    url: "https://qrfds.com",
+    siteName: "QRFDS",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
