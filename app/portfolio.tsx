@@ -11,51 +11,129 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 const services = [
   {
     number: "01",
-    title: "Digital products",
-    body: "End-to-end product strategy, UX, and engineering for software people choose to keep using.",
-    tags: ["Product strategy", "UI/UX", "Design systems"],
+    category: "Website design and application development",
+    title: "E-commerce Website Development",
+    body: "E-commerce websites with secure checkout, product management, and payment and logistics integrations.",
+    tags: ["Secure checkout", "Product management", "Payments & logistics"],
     accent: "blue",
-    glyph: "✦",
+    glyph: "◇",
   },
   {
     number: "02",
-    title: "Web platforms",
-    body: "Fast, resilient web applications engineered around your operations—not a generic template.",
-    tags: ["React / Next.js", "Real-time", "Commerce"],
-    accent: "lime",
+    category: "Website design and application development",
+    title: "Web Development Services",
+    body: "High-performance websites focused on speed, usability, and conversion.",
+    tags: ["Performance", "Usability", "Conversion"],
+    accent: "primary",
     glyph: "↗",
   },
   {
     number: "03",
-    title: "Mobile apps",
-    body: "Native-feeling iOS and Android experiences with one coherent product vision.",
-    tags: ["iOS & Android", "Cross-platform", "Offline-first"],
+    category: "Website design and application development",
+    title: "Mobile App Development",
+    body: "Fast, secure mobile apps with easy UX and integrations for payments, notifications, and admin dashboards.",
+    tags: ["Payments", "Notifications", "Admin dashboards"],
     accent: "coral",
     glyph: "◎",
   },
   {
     number: "04",
-    title: "SaaS systems",
+    category: "Cloud computing and API integration",
+    title: "Cloud Computing Services",
+    body: "Cloud infrastructure and architecture that reduce complexity and prepare systems for growth.",
+    tags: ["Infrastructure", "Architecture", "API integration"],
+    accent: "blue",
+    glyph: "☁",
+  },
+  {
+    number: "05",
+    category: "Cloud computing and API integration",
+    title: "Website Speed Optimization",
+    body: "Performance optimization with a clear technical plan to load faster and reduce drop-off.",
+    tags: ["Technical audit", "Core Web Vitals", "Faster loading"],
+    accent: "primary",
+    glyph: "⚡",
+  },
+  {
+    number: "06",
+    category: "Cloud computing and API integration",
+    title: "Internet of Things (IoT)",
+    body: "IoT solutions that connect devices, collect operational data, and deliver actionable insights.",
+    tags: ["Connected devices", "Operational data", "Live insights"],
+    accent: "coral",
+    glyph: "∿",
+  },
+  {
+    number: "07",
+    category: "Cybersecurity and data analytics",
+    title: "Cybersecurity",
+    body: "Proactive protection controls, risk reduction, and operational response readiness.",
+    tags: ["Protection controls", "Risk reduction", "Response readiness"],
+    accent: "blue",
+    glyph: "⬡",
+  },
+  {
+    number: "08",
+    category: "SEO and digital identity",
+    title: "SEO Services",
+    body: "Technical SEO, content optimization, and structured growth strategies for qualified traffic.",
+    tags: ["Technical SEO", "Content optimization", "Organic growth"],
+    accent: "primary",
+    glyph: "⌁",
+  },
+  {
+    number: "09",
+    category: "SEO and digital identity",
+    title: "Content Creation Services",
+    body: "Digital content with a clear brand voice and marketing messages aligned to sales goals.",
+    tags: ["Brand voice", "Marketing content", "Sales alignment"],
+    accent: "coral",
+    glyph: "✎",
+  },
+  {
+    number: "10",
+    category: "SEO and digital identity",
+    title: "Brand Identity Design",
+    body: "Brand identity and visual systems for a consistent, memorable digital presence.",
+    tags: ["Visual identity", "Design systems", "Brand consistency"],
+    accent: "blue",
+    glyph: "✦",
+  },
+  {
+    number: "11",
+    category: "SEO and digital identity",
+    title: "UX Design Services",
+    body: "UX audits and iterative improvements for conversions, accessibility, and satisfaction.",
+    tags: ["UX audits", "Accessibility", "Conversion"],
+    accent: "primary",
+    glyph: "◉",
+  },
+  {
+    number: "12",
+    category: "SEO and digital identity",
+    title: "Digital Marketing Services",
+    body: "Practical campaigns to increase visibility and lead generation.",
+    tags: ["Campaigns", "Visibility", "Lead generation"],
+    accent: "coral",
+    glyph: "↗",
+  },
+  {
+    number: "13",
+    category: "Product and software systems",
+    title: "SaaS Systems",
     body: "Multi-tenant platforms with thoughtful permissions, billing, workflows, and observability.",
     tags: ["Architecture", "Subscriptions", "Analytics"],
     accent: "blue",
     glyph: "⌘",
   },
   {
-    number: "05",
-    title: "AI & automation",
-    body: "Useful intelligence embedded into real workflows, with guardrails your team can trust.",
-    tags: ["AI agents", "RAG", "Automation"],
-    accent: "lime",
+    number: "14",
+    category: "Cybersecurity and data analytics",
+    title: "AI, Automation & Data Analytics",
+    body: "Useful intelligence, automation, and data analytics embedded into real workflows with practical guardrails.",
+    tags: ["AI agents", "Data analytics", "Automation"],
+    accent: "primary",
     glyph: "✣",
-  },
-  {
-    number: "06",
-    title: "Cloud & APIs",
-    body: "Secure backend systems, clean integrations, and infrastructure that scales without drama.",
-    tags: ["API design", "DevOps", "Cloud"],
-    accent: "coral",
-    glyph: "∿",
   },
 ];
 
@@ -68,8 +146,8 @@ const projects = [
       "A command center that turns live fleet data into faster routes, fewer exceptions, and clearer decisions.",
     result: "38% faster dispatch",
     scope: "Product · UX · Platform · Data",
-    image: "/qrfds/project-vector.png",
-    alt: "Dark logistics control platform with maps, fleet routes, and analytics",
+    image: "/qrfds/project-vector-v2.png",
+    alt: "Dark logistics intelligence platform with cyan fleet routes and analytics",
     theme: "dark",
   },
   {
@@ -80,8 +158,8 @@ const projects = [
       "A calm operational layer connecting teams, patient flow, and capacity across a complex care network.",
     result: "2.4× faster planning",
     scope: "Strategy · Design system · AI",
-    image: "/qrfds/project-orbit.png",
-    alt: "Warm clinical operations product with translucent analytics panels",
+    image: "/qrfds/project-orbit-v2.png",
+    alt: "Bright clinical operations system with cyan and blue translucent data panels",
     theme: "light",
   },
   {
@@ -92,8 +170,8 @@ const projects = [
       "A visual system for deploying, observing, and improving AI workflows across one secure workspace.",
     result: "From prototype to scale",
     scope: "Research · SaaS · Cloud",
-    image: "/qrfds/hero-systems.png",
-    alt: "Abstract glass infrastructure with luminous blue and lime data pathways",
+    image: "/qrfds/project-aether-v2.png",
+    alt: "Glass AI infrastructure modules connected by cyan and blue data pathways",
     theme: "electric",
   },
 ];
@@ -226,7 +304,7 @@ function Hero() {
       <div className="hero-stage">
         <div className="hero-media" aria-hidden="true">
           <Image
-            src="/qrfds/hero-systems.png"
+            src="/qrfds/hero-brand-v2.png"
             alt=""
             fill
             preload
@@ -347,6 +425,7 @@ function Services() {
                   <i>{service.glyph}</i>
                 </div>
                 <div>
+                  <small className="service-category">{service.category}</small>
                   <h3>{service.title}</h3>
                   <p>{service.body}</p>
                 </div>
@@ -358,7 +437,7 @@ function Services() {
           </div>
         </div>
         <div className="services-progress page-shell" aria-hidden="true">
-          <span>01</span><i><b /></i><span>06</span>
+          <span>01</span><i><b /></i><span>{String(services.length).padStart(2, "0")}</span>
         </div>
       </div>
     </section>
@@ -845,7 +924,7 @@ function PortfolioContent() {
 
           featuredIntro
             .fromTo(captions[0], { scale: 0.5, z: -900, opacity: 0 }, { scale: 1, z: 0, opacity: 1, duration: 0.62, ease: "power2.out" }, 0.32)
-            .fromTo(".featured-stage .transaction-step i", { scale: 0.5 }, { scale: 1.18, backgroundColor: "#c8ff52", stagger: 0.08, yoyo: true, repeat: 1, duration: 0.16 }, 0.62);
+            .fromTo(".featured-stage .transaction-step i", { scale: 0.5 }, { scale: 1.18, backgroundColor: "#42B6C9", stagger: 0.08, yoyo: true, repeat: 1, duration: 0.16 }, 0.62);
 
           const featuredTimeline = gsap.timeline({
             defaults: { force3D: false },
