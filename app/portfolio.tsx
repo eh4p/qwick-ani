@@ -52,7 +52,7 @@ const services = [
     body: "Performance optimization with a clear technical plan to load faster and reduce drop-off.",
     tags: ["Technical audit", "Core Web Vitals", "Faster loading"],
     accent: "primary",
-    glyph: "⚡",
+    glyph: "ϟ",
   },
   {
     number: "06",
@@ -133,7 +133,7 @@ const services = [
     body: "Useful intelligence, automation, and data analytics embedded into real workflows with practical guardrails.",
     tags: ["AI agents", "Data analytics", "Automation"],
     accent: "primary",
-    glyph: "✣",
+    glyph: "⌬",
   },
 ];
 
