@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,91 +11,142 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 const services = [
   {
     number: "01",
-    title: "Digital products",
-    body: "End-to-end product strategy, UX, and engineering for software people choose to keep using.",
-    tags: ["Product strategy", "UI/UX", "Design systems"],
+    category: "Website design and application development",
+    title: "E-commerce Website Development",
+    body: "E-commerce websites with secure checkout, product management, and payment and logistics integrations.",
+    tags: ["Secure checkout", "Product management", "Payments & logistics"],
     accent: "blue",
-    glyph: "✦",
+    glyph: "◇",
   },
   {
     number: "02",
-    title: "Web platforms",
-    body: "Fast, resilient web applications engineered around your operations—not a generic template.",
-    tags: ["React / Next.js", "Real-time", "Commerce"],
-    accent: "lime",
+    category: "Website design and application development",
+    title: "Web Development Services",
+    body: "High-performance websites focused on speed, usability, and conversion.",
+    tags: ["Performance", "Usability", "Conversion"],
+    accent: "primary",
     glyph: "↗",
   },
   {
     number: "03",
-    title: "Mobile apps",
-    body: "Native-feeling iOS and Android experiences with one coherent product vision.",
-    tags: ["iOS & Android", "Cross-platform", "Offline-first"],
+    category: "Website design and application development",
+    title: "Mobile App Development",
+    body: "Fast, secure mobile apps with easy UX and integrations for payments, notifications, and admin dashboards.",
+    tags: ["Payments", "Notifications", "Admin dashboards"],
     accent: "coral",
     glyph: "◎",
   },
   {
     number: "04",
-    title: "SaaS systems",
+    category: "Cloud computing and API integration",
+    title: "Cloud Computing Services",
+    body: "Cloud infrastructure and architecture that reduce complexity and prepare systems for growth.",
+    tags: ["Infrastructure", "Architecture", "API integration"],
+    accent: "blue",
+    glyph: "☁",
+  },
+  {
+    number: "05",
+    category: "Cloud computing and API integration",
+    title: "Website Speed Optimization",
+    body: "Performance optimization with a clear technical plan to load faster and reduce drop-off.",
+    tags: ["Technical audit", "Core Web Vitals", "Faster loading"],
+    accent: "primary",
+    glyph: "ϟ",
+  },
+  {
+    number: "06",
+    category: "Cloud computing and API integration",
+    title: "Internet of Things (IoT)",
+    body: "IoT solutions that connect devices, collect operational data, and deliver actionable insights.",
+    tags: ["Connected devices", "Operational data", "Live insights"],
+    accent: "coral",
+    glyph: "∿",
+  },
+  {
+    number: "07",
+    category: "Cybersecurity and data analytics",
+    title: "Cybersecurity",
+    body: "Proactive protection controls, risk reduction, and operational response readiness.",
+    tags: ["Protection controls", "Risk reduction", "Response readiness"],
+    accent: "blue",
+    glyph: "⬡",
+  },
+  {
+    number: "08",
+    category: "SEO and digital identity",
+    title: "SEO Services",
+    body: "Technical SEO, content optimization, and structured growth strategies for qualified traffic.",
+    tags: ["Technical SEO", "Content optimization", "Organic growth"],
+    accent: "primary",
+    glyph: "⌁",
+  },
+  {
+    number: "09",
+    category: "SEO and digital identity",
+    title: "Content Creation Services",
+    body: "Digital content with a clear brand voice and marketing messages aligned to sales goals.",
+    tags: ["Brand voice", "Marketing content", "Sales alignment"],
+    accent: "coral",
+    glyph: "✎",
+  },
+  {
+    number: "10",
+    category: "SEO and digital identity",
+    title: "Brand Identity Design",
+    body: "Brand identity and visual systems for a consistent, memorable digital presence.",
+    tags: ["Visual identity", "Design systems", "Brand consistency"],
+    accent: "blue",
+    glyph: "✦",
+  },
+  {
+    number: "11",
+    category: "SEO and digital identity",
+    title: "UX Design Services",
+    body: "UX audits and iterative improvements for conversions, accessibility, and satisfaction.",
+    tags: ["UX audits", "Accessibility", "Conversion"],
+    accent: "primary",
+    glyph: "◉",
+  },
+  {
+    number: "12",
+    category: "SEO and digital identity",
+    title: "Digital Marketing Services",
+    body: "Practical campaigns to increase visibility and lead generation.",
+    tags: ["Campaigns", "Visibility", "Lead generation"],
+    accent: "coral",
+    glyph: "↗",
+  },
+  {
+    number: "13",
+    category: "Product and software systems",
+    title: "SaaS Systems",
     body: "Multi-tenant platforms with thoughtful permissions, billing, workflows, and observability.",
     tags: ["Architecture", "Subscriptions", "Analytics"],
     accent: "blue",
     glyph: "⌘",
   },
   {
-    number: "05",
-    title: "AI & automation",
-    body: "Useful intelligence embedded into real workflows, with guardrails your team can trust.",
-    tags: ["AI agents", "RAG", "Automation"],
-    accent: "lime",
-    glyph: "✣",
-  },
-  {
-    number: "06",
-    title: "Cloud & APIs",
-    body: "Secure backend systems, clean integrations, and infrastructure that scales without drama.",
-    tags: ["API design", "DevOps", "Cloud"],
-    accent: "coral",
-    glyph: "∿",
+    number: "14",
+    category: "Cybersecurity and data analytics",
+    title: "AI, Automation & Data Analytics",
+    body: "Useful intelligence, automation, and data analytics embedded into real workflows with practical guardrails.",
+    tags: ["AI agents", "Data analytics", "Automation"],
+    accent: "primary",
+    glyph: "⌬",
   },
 ];
 
 const projects = [
-  {
-    number: "01",
-    name: "Vector",
-    type: "Logistics intelligence platform",
-    description:
-      "A command center that turns live fleet data into faster routes, fewer exceptions, and clearer decisions.",
-    result: "38% faster dispatch",
-    scope: "Product · UX · Platform · Data",
-    image: "/qrfds/project-vector.png",
-    alt: "Dark logistics control platform with maps, fleet routes, and analytics",
-    theme: "dark",
-  },
-  {
-    number: "02",
-    name: "Orbit",
-    type: "Clinical operations system",
-    description:
-      "A calm operational layer connecting teams, patient flow, and capacity across a complex care network.",
-    result: "2.4× faster planning",
-    scope: "Strategy · Design system · AI",
-    image: "/qrfds/project-orbit.png",
-    alt: "Warm clinical operations product with translucent analytics panels",
-    theme: "light",
-  },
-  {
-    number: "03",
-    name: "Aether",
-    type: "AI infrastructure workspace",
-    description:
-      "A visual system for deploying, observing, and improving AI workflows across one secure workspace.",
-    result: "From prototype to scale",
-    scope: "Research · SaaS · Cloud",
-    image: "/qrfds/hero-systems.png",
-    alt: "Abstract glass infrastructure with luminous blue and lime data pathways",
-    theme: "electric",
-  },
+  { name: "Allianz", theme: "dark" },
+  { name: "HNI (Hanan Nagi)", theme: "light" },
+  { name: "Address Investment", theme: "electric" },
+  { name: "Atomic Rides", theme: "dark" },
+  { name: "LENSAURA", theme: "light" },
+  { name: "Optimim Oil", theme: "electric" },
+  { name: "Colorplay", theme: "dark" },
+  { name: "Bfas", theme: "light" },
+  { name: "11:11", theme: "electric" },
 ];
 
 const process = [
@@ -139,11 +190,14 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 function Logo({ footer = false }: { footer?: boolean }) {
   return (
     <a className={`logo ${footer ? "logo-footer" : ""}`} href="#top" aria-label="QRFDS — back to top">
-      <span className="logo-mark" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </span>
+      <Image
+        className="logo-image"
+        src="/qrfds/qrfds-logo.webp"
+        alt=""
+        width={512}
+        height={493}
+        aria-hidden="true"
+      />
       <span>QRFDS</span>
     </a>
   );
@@ -151,13 +205,12 @@ function Logo({ footer = false }: { footer?: boolean }) {
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
 
   return (
     <>
       <motion.header
         className="site-header"
-        initial={prefersReducedMotion ? false : { y: -24, opacity: 0 }}
+        initial={{ y: -24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
@@ -192,7 +245,7 @@ function Header() {
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.55, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
           >
             <nav aria-label="Mobile navigation">
               {[
@@ -211,7 +264,7 @@ function Header() {
             </nav>
             <div className="mobile-menu-foot">
               <span>Digital products, built properly.</span>
-              <a href="mailto:hello@qrfds.com">hello@qrfds.com</a>
+              <a href="mailto:info@qrfds.com">info@qrfds.com</a>
             </div>
           </motion.div>
         )}
@@ -226,7 +279,7 @@ function Hero() {
       <div className="hero-stage">
         <div className="hero-media" aria-hidden="true">
           <Image
-            src="/qrfds/hero-systems.png"
+            src="/qrfds/hero-brand-v2.png"
             alt=""
             fill
             preload
@@ -347,6 +400,7 @@ function Services() {
                   <i>{service.glyph}</i>
                 </div>
                 <div>
+                  <small className="service-category">{service.category}</small>
                   <h3>{service.title}</h3>
                   <p>{service.body}</p>
                 </div>
@@ -358,7 +412,7 @@ function Services() {
           </div>
         </div>
         <div className="services-progress page-shell" aria-hidden="true">
-          <span>01</span><i><b /></i><span>06</span>
+          <span>01</span><i><b /></i><span>{String(services.length).padStart(2, "0")}</span>
         </div>
       </div>
     </section>
@@ -512,7 +566,6 @@ function Work() {
       <div className="work-stage">
         <div className="work-heading page-shell">
           <p className="eyebrow">03 / Selected work</p>
-          <p>Realistic concepts, shown to demonstrate the kind of systems we build.</p>
         </div>
         <div className="work-panels">
           {projects.map((project, index) => (
@@ -521,35 +574,21 @@ function Work() {
               key={project.name}
               style={{ "--project-index": index } as CSSProperties}
             >
-              <div className="project-visual">
-                <Image
-                  src={project.image}
-                  alt={project.alt}
-                  fill
-                  sizes="(max-width: 900px) 100vw, 66vw"
-                />
+              <div className="project-scene" aria-hidden="true">
                 <div className="project-grid" aria-hidden="true" />
-                <span className="project-chip">Case study · {project.number}</span>
+                <div className="project-orb project-orb-primary" />
+                <div className="project-orb project-orb-secondary" />
+                <span className="project-echo project-echo-a">{project.name}</span>
+                <span className="project-echo project-echo-b">{project.name}</span>
               </div>
               <div className="project-copy">
-                <div>
-                  <p>{project.type}</p>
-                  <h3>{project.name}</h3>
-                </div>
-                <p className="project-description">{project.description}</p>
-                <div className="project-meta">
-                  <span><small>Outcome</small>{project.result}</span>
-                  <span><small>Scope</small>{project.scope}</span>
-                </div>
-                <a href="#contact" className="project-link" aria-label={`Build a product like ${project.name}`}>
-                  Build something ambitious <Arrow diagonal />
-                </a>
+                <h3>{project.name}</h3>
               </div>
             </article>
           ))}
         </div>
         <div className="work-counter" aria-hidden="true">
-          {projects.map((project, index) => <i className={index === 0 ? "active" : ""} key={project.number} />)}
+          {projects.map((project, index) => <i className={index === 0 ? "active" : ""} key={project.name} />)}
         </div>
       </div>
     </section>
@@ -680,9 +719,9 @@ function Contact() {
         <p className="eyebrow reveal">Have an idea worth building?</p>
         <h2 className="reveal">Let&apos;s make it<br /><em>real.</em></h2>
         <div className="contact-row reveal">
-          <a href="mailto:hello@qrfds.com">
+          <a href="mailto:info@qrfds.com">
             <span>Start a conversation</span>
-            <strong>hello@qrfds.com</strong>
+            <strong>info@qrfds.com</strong>
             <i><Arrow diagonal /></i>
           </a>
           <p>
@@ -702,7 +741,7 @@ function Footer() {
         <Logo footer />
         <div className="footer-nav">
           <div><span>Explore</span><a href="#services">Services</a><a href="#work">Work</a><a href="#about">About</a><a href="#process">Process</a></div>
-          <div><span>Connect</span><a href="mailto:hello@qrfds.com">Email</a><a href="https://www.linkedin.com/company/qrfds/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/qrfds" target="_blank" rel="noreferrer">GitHub</a></div>
+          <div><span>Connect</span><a href="mailto:info@qrfds.com">Email</a><a href="https://www.linkedin.com/company/qrfds/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/qrfds" target="_blank" rel="noreferrer">GitHub</a></div>
         </div>
       </div>
       <div className="page-shell footer-bottom">
@@ -720,20 +759,38 @@ function PortfolioContent() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let lenis: Lenis | null = null;
     const lenisFrame = (time: number) => lenis?.raf(time * 1000);
 
-    if (!reduceMotion) {
-      lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 });
-      lenis.on("scroll", ScrollTrigger.update);
-      gsap.ticker.add(lenisFrame);
-      gsap.ticker.lagSmoothing(0);
-    }
-
     const media = gsap.matchMedia();
+    let refreshFrame = 0;
+    let resizeTimer = 0;
+    let isMounted = true;
+
+    const refreshScrollTriggers = () => {
+      window.cancelAnimationFrame(refreshFrame);
+      refreshFrame = window.requestAnimationFrame(() => {
+        lenis?.resize();
+        ScrollTrigger.refresh(true);
+      });
+    };
+
+    const refreshAfterResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(refreshScrollTriggers, 150);
+    };
+
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") refreshScrollTriggers();
+    };
+
     const context = gsap.context(() => {
-      media.add("(prefers-reduced-motion: no-preference)", () => {
+      media.add("(min-width: 768px)", () => {
+        lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 });
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add(lenisFrame);
+        gsap.ticker.lagSmoothing(0);
+
         gsap.utils.toArray<HTMLElement>(".reveal").forEach((element) => {
           gsap.fromTo(
             element,
@@ -749,6 +806,7 @@ function PortfolioContent() {
         });
 
         gsap.timeline({
+          defaults: { force3D: true },
           scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom bottom", scrub: 1.2 },
         })
           .to(".hero-media img", { scale: 1.2, yPercent: 7, ease: "none" }, 0)
@@ -760,10 +818,10 @@ function PortfolioContent() {
           .to(".node-a", { xPercent: -140, yPercent: -90, ease: "none" }, 0)
           .to(".node-b", { xPercent: 120, yPercent: 75, ease: "none" }, 0);
 
-        media.add("(min-width: 901px)", () => {
+        {
           const track = document.querySelector<HTMLElement>(".services-track");
           if (track) {
-            const serviceTween = gsap.to(track, {
+            gsap.to(track, {
               x: () => -(track.scrollWidth - window.innerWidth + window.innerWidth * 0.08),
               ease: "none",
               scrollTrigger: {
@@ -786,16 +844,14 @@ function PortfolioContent() {
                 scrub: true,
               },
             });
-            return () => serviceTween.kill();
           }
-        });
+        }
 
-        media.add({ mobile: "(max-width: 800px)", desktop: "(min-width: 801px)" }, ({ conditions }) => {
-          const isMobile = conditions?.mobile ?? false;
-          const orbitX = window.innerWidth * (isMobile ? 0.6 : 0.46);
-          const orbitY = window.innerHeight * (isMobile ? 0.06 : 0.13);
-          const orbitApex = window.innerHeight * (isMobile ? -0.03 : -0.1);
-          const orbitUnderside = window.innerHeight * (isMobile ? 0.3 : 0.46);
+        {
+          const orbitX = window.innerWidth * 0.46;
+          const orbitY = window.innerHeight * 0.13;
+          const orbitApex = window.innerHeight * -0.1;
+          const orbitUnderside = window.innerHeight * 0.46;
           const cards = gsap.utils.toArray<HTMLElement>(".featured-card-position");
           const captions = gsap.utils.toArray<HTMLElement>(".featured-caption-copy");
           const slots = [
@@ -810,7 +866,7 @@ function PortfolioContent() {
           gsap.set(captions.slice(1), { autoAlpha: 0, y: 18 });
 
           const featuredIntro = gsap.timeline({
-            defaults: { force3D: false },
+            defaults: { force3D: true },
             scrollTrigger: {
               trigger: ".featured-products",
               start: "top bottom",
@@ -845,14 +901,14 @@ function PortfolioContent() {
 
           featuredIntro
             .fromTo(captions[0], { scale: 0.5, z: -900, opacity: 0 }, { scale: 1, z: 0, opacity: 1, duration: 0.62, ease: "power2.out" }, 0.32)
-            .fromTo(".featured-stage .transaction-step i", { scale: 0.5 }, { scale: 1.18, backgroundColor: "#c8ff52", stagger: 0.08, yoyo: true, repeat: 1, duration: 0.16 }, 0.62);
+            .fromTo(".featured-stage .transaction-step i", { scale: 0.5 }, { scale: 1.18, backgroundColor: "#42B6C9", stagger: 0.08, yoyo: true, repeat: 1, duration: 0.16 }, 0.62);
 
           const featuredTimeline = gsap.timeline({
-            defaults: { force3D: false },
+            defaults: { force3D: true },
             scrollTrigger: {
               trigger: ".featured-products",
               start: "top top",
-              end: isMobile ? "+=420%" : "+=500%",
+              end: "+=500%",
               pin: true,
               scrub: 1.15,
               anticipatePin: 1,
@@ -893,23 +949,25 @@ function PortfolioContent() {
 
           featuredTimeline
             .to(".featured-card-scene", { scale: 1.58, opacity: 0, duration: 0.9, ease: "power2.in" }, 4.28)
-            .to(".featured-captions", { scale: 1.38, z: 520, opacity: 0, filter: "blur(12px)", duration: 0.7, ease: "power2.in" }, 4.4)
+            .to(".featured-captions", { scale: 1.38, z: 520, opacity: 0, duration: 0.7, ease: "power2.in" }, 4.4)
             .to(".featured-stage .outline-type", { scale: 1.24, opacity: 0, duration: 0.7, ease: "power2.in" }, 4.4);
-        });
+        }
 
-        media.add("(min-width: 901px)", () => {
+        {
           const panels = gsap.utils.toArray<HTMLElement>(".work-panel");
           const dots = gsap.utils.toArray<HTMLElement>(".work-counter i");
-          gsap.set(panels.slice(1), { clipPath: "inset(100% 0 0 0)" });
+          gsap.set(panels, { zIndex: (index) => index + 1 });
+          gsap.set(panels.slice(1), { yPercent: 100, autoAlpha: 0 });
 
           const timeline = gsap.timeline({
             scrollTrigger: {
               trigger: ".work",
               start: "top top",
-              end: "+=260%",
+              end: () => `+=${Math.max((panels.length - 1) * window.innerHeight * 0.78, window.innerHeight * 2.6)}`,
               pin: ".work-stage",
               scrub: 1,
               anticipatePin: 1,
+              invalidateOnRefresh: true,
             },
           });
 
@@ -917,12 +975,16 @@ function PortfolioContent() {
             const start = index * 1.2 + 0.35;
             timeline
               .to(panels[index].querySelector(".project-copy"), { y: -80, opacity: 0, duration: 0.35 }, start)
-              .to(panel, { clipPath: "inset(0% 0 0 0)", duration: 0.9, ease: "power2.inOut" }, start)
-              .fromTo(panel.querySelector(".project-visual img"), { scale: 1.14 }, { scale: 1, duration: 0.9, ease: "power2.out" }, start)
+              .set(panel, { autoAlpha: 1 }, start)
+              .to(panel, { yPercent: 0, duration: 0.9, ease: "power2.inOut", force3D: true }, start)
+              .fromTo(panel.querySelector(".project-copy"), { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.72, ease: "power2.out" }, start + 0.18)
+              .fromTo(panel.querySelector(".project-orb-primary"), { yPercent: 28 }, { yPercent: 0, duration: 0.9, ease: "power2.out", force3D: true }, start)
+              .fromTo(panel.querySelector(".project-echo-a"), { xPercent: -5 }, { xPercent: 0, duration: 0.9, ease: "power1.out", force3D: true }, start)
+              .set(panels[index], { autoAlpha: 0 }, start + 0.9)
               .set(dots[index], { className: "" }, start + 0.52)
               .set(dots[index + 1], { className: "active" }, start + 0.52);
           });
-        });
+        }
 
         gsap.utils.toArray<HTMLElement>(".process-step").forEach((step) => {
           gsap.fromTo(step, { opacity: 0.24 }, {
@@ -932,7 +994,9 @@ function PortfolioContent() {
         });
 
         gsap.to(".about-grid", {
-          backgroundPosition: "120px 80px",
+          x: 120,
+          y: 80,
+          force3D: true,
           ease: "none",
           scrollTrigger: { trigger: ".about", start: "top bottom", end: "bottom top", scrub: 1 },
         });
@@ -941,12 +1005,39 @@ function PortfolioContent() {
           ease: "none",
           scrollTrigger: { trigger: ".about", start: "top bottom", end: "bottom top", scrub: 1 },
         });
+
+        return () => {
+          gsap.ticker.remove(lenisFrame);
+          lenis?.destroy();
+          lenis = null;
+        };
       });
     }, root);
 
-    ScrollTrigger.refresh();
+    window.addEventListener("load", refreshScrollTriggers);
+    window.addEventListener("resize", refreshAfterResize);
+    window.addEventListener("orientationchange", refreshScrollTriggers);
+    screen.orientation?.addEventListener("change", refreshScrollTriggers);
+    window.addEventListener("pageshow", refreshScrollTriggers);
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    document.fonts?.addEventListener("loadingdone", refreshScrollTriggers);
+    document.fonts?.ready.then(() => {
+      if (isMounted) refreshScrollTriggers();
+    });
+
+    refreshScrollTriggers();
 
     return () => {
+      isMounted = false;
+      window.cancelAnimationFrame(refreshFrame);
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("load", refreshScrollTriggers);
+      window.removeEventListener("resize", refreshAfterResize);
+      window.removeEventListener("orientationchange", refreshScrollTriggers);
+      screen.orientation?.removeEventListener("change", refreshScrollTriggers);
+      window.removeEventListener("pageshow", refreshScrollTriggers);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+      document.fonts?.removeEventListener("loadingdone", refreshScrollTriggers);
       gsap.ticker.remove(lenisFrame);
       lenis?.destroy();
       media.revert();
