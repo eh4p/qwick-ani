@@ -252,7 +252,6 @@ button {
 .header-cta svg,
 .button svg,
 .text-link svg,
-.project-link svg,
 .mobile-menu svg {
   width: 1rem;
   fill: none;
@@ -1773,15 +1772,6 @@ button {
   color: var(--primary);
 }
 
-.work-heading > p:last-child {
-  max-width: 23rem;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.42);
-  font-size: 0.7rem;
-  line-height: 1.5;
-  text-align: right;
-}
-
 .work-panels,
 .work-panel {
   position: absolute;
@@ -1789,10 +1779,11 @@ button {
 }
 
 .work-panel {
-  display: grid;
-  grid-template-columns: 66% 34%;
-  padding-top: 10rem;
-  background: var(--ink);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 46%, rgba(66, 182, 201, 0.2), transparent 28rem),
+    linear-gradient(135deg, #071116, #0b2632 58%, #071116);
+  color: var(--white);
   will-change: clip-path;
 }
 
@@ -1803,149 +1794,171 @@ button {
 }
 
 .work-panel.theme-light {
-  background: #dcd7cc;
+  background:
+    radial-gradient(circle at 78% 46%, rgba(53, 199, 214, 0.3), transparent 27rem),
+    linear-gradient(135deg, #f0ede4, #dcebed 58%, #f3f0e8);
   color: var(--ink);
 }
 
 .work-panel.theme-electric {
-  background: #121a34;
+  background:
+    radial-gradient(circle at 76% 44%, rgba(53, 199, 214, 0.23), transparent 27rem),
+    linear-gradient(135deg, #0a142b, #173970 58%, #0a142b);
 }
 
-.project-visual {
-  position: relative;
-  height: calc(100svh - 12rem);
-  min-height: 30rem;
+.project-scene {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
-  border-radius: 0 1.2rem 0 0;
-  background: #080b12;
-}
-
-.project-visual img {
-  object-fit: cover;
+  transform-origin: center bottom;
   will-change: transform;
 }
 
-.project-1 .project-visual img { object-position: center; }
-.project-2 .project-visual img { object-position: center 58%; }
-.project-3 .project-visual img { object-position: center; }
-
-.project-visual::after {
+.project-scene::before {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.34), transparent 40%);
+  top: 18%;
+  right: 7vw;
+  width: min(44vw, 42rem);
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 5vw rgba(255, 255, 255, 0.025),
+    0 0 0 10vw rgba(255, 255, 255, 0.018);
   content: "";
+}
+
+.theme-light .project-scene::before {
+  border-color: rgba(10, 11, 13, 0.2);
+  box-shadow:
+    0 0 0 5vw rgba(10, 11, 13, 0.025),
+    0 0 0 10vw rgba(10, 11, 13, 0.018);
+}
+
+.project-scene::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 33%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent 8%, var(--primary) 48%, transparent 92%);
+  content: "";
+  opacity: 0.55;
+  transform: rotate(17deg);
+  transform-origin: center;
 }
 
 .project-grid {
   position: absolute;
-  z-index: 2;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 4.5rem 4.5rem;
-  mask-image: linear-gradient(to bottom, transparent, black);
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 5rem 5rem;
+  mask-image: radial-gradient(circle at 70% 52%, black, transparent 72%);
 }
 
-.project-chip {
+.theme-light .project-grid {
+  background-image:
+    linear-gradient(rgba(10, 11, 13, 0.065) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 11, 13, 0.065) 1px, transparent 1px);
+}
+
+.project-orb {
   position: absolute;
-  z-index: 3;
-  bottom: 1.25rem;
-  left: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 999px;
-  padding: 0.55rem 0.75rem;
-  background: rgba(10, 11, 13, 0.38);
-  color: white;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.54rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  backdrop-filter: blur(10px);
+  border-radius: 50%;
+}
+
+.project-orb-primary {
+  top: 31%;
+  right: 17vw;
+  width: clamp(8rem, 16vw, 18rem);
+  aspect-ratio: 1;
+  background: var(--brand-gradient);
+  box-shadow: 0 0 6rem rgba(53, 199, 214, 0.32);
+  opacity: 0.88;
+}
+
+.project-orb-secondary {
+  right: 8vw;
+  bottom: -11vw;
+  width: clamp(16rem, 31vw, 36rem);
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(8px);
+}
+
+.theme-light .project-orb-secondary {
+  border-color: rgba(10, 11, 13, 0.22);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.work-panel:nth-child(3n + 2) .project-orb-primary {
+  top: 22%;
+  right: 8vw;
+}
+
+.work-panel:nth-child(3n + 2) .project-orb-secondary {
+  right: 24vw;
+  bottom: -16vw;
+}
+
+.work-panel:nth-child(3n) .project-orb-primary {
+  top: 48%;
+  right: 25vw;
+}
+
+.work-panel:nth-child(3n) .project-orb-secondary {
+  right: -5vw;
+  bottom: 8%;
+}
+
+.project-echo {
+  position: absolute;
+  left: -0.04em;
+  color: transparent;
+  font-size: clamp(7rem, 17vw, 20rem);
+  font-weight: 500;
+  letter-spacing: -0.095em;
+  line-height: 0.72;
+  opacity: 0.12;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.68);
+  white-space: nowrap;
+}
+
+.theme-light .project-echo {
+  -webkit-text-stroke-color: rgba(10, 11, 13, 0.58);
+}
+
+.project-echo-a {
+  top: 24%;
+}
+
+.project-echo-b {
+  bottom: 4%;
+  left: 13%;
+  opacity: 0.055;
 }
 
 .project-copy {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 3rem 2.5vw 5rem;
-}
-
-.project-copy > div:first-child > p {
-  margin: 0 0 1rem;
-  color: var(--primary);
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.61rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.theme-light .project-copy > div:first-child > p {
-  color: var(--blue);
+  align-items: center;
+  padding: 10rem 5vw 4rem;
+  will-change: opacity, transform;
 }
 
 .project-copy h3 {
+  max-width: 11ch;
   margin: 0;
-  font-size: clamp(3.8rem, 6.6vw, 7.5rem);
-  font-weight: 460;
+  font-size: clamp(5rem, 10.5vw, 12rem);
+  font-weight: 500;
   letter-spacing: -0.09em;
-  line-height: 0.8;
-}
-
-.project-description {
-  max-width: 29rem;
-  margin: 3rem 0 0;
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-.theme-light .project-description {
-  color: rgba(10, 11, 13, 0.6);
-}
-
-.project-meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-top: 2.5rem;
-  border-top: 1px solid var(--line-dark);
-  padding-top: 1rem;
-}
-
-.theme-light .project-meta {
-  border-color: var(--line-light);
-}
-
-.project-meta span {
-  font-size: 0.68rem;
-  line-height: 1.4;
-}
-
-.project-meta small {
-  display: block;
-  margin-bottom: 0.45rem;
-  color: var(--muted);
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.52rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.theme-light .project-meta small {
-  color: rgba(10, 11, 13, 0.48);
-}
-
-.project-link {
-  display: inline-flex;
-  width: max-content;
-  align-items: center;
-  gap: 0.7rem;
-  margin-top: 2.5rem;
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 0.45rem;
-  font-size: 0.68rem;
-  font-weight: 650;
+  line-height: 0.78;
+  text-wrap: balance;
 }
 
 .work-counter {
@@ -2694,11 +2707,6 @@ button {
     margin-bottom: 3rem;
   }
 
-  .work-heading > p:last-child {
-    margin-top: 1rem;
-    text-align: left;
-  }
-
   .work-panels,
   .work-panel {
     position: relative;
@@ -2712,26 +2720,21 @@ button {
   }
 
   .work-panel {
-    grid-template-columns: 1fr;
+    min-height: 30rem;
     overflow: hidden;
     border: 1px solid var(--line-dark);
     border-radius: 1rem;
     padding-top: 0;
   }
 
-  .project-visual {
-    height: auto;
-    min-height: 0;
-    aspect-ratio: 16 / 10;
-    border-radius: 0;
+  .project-scene::before {
+    top: 20%;
+    right: -8rem;
+    width: 28rem;
   }
 
   .project-copy {
-    padding: 2.2rem 1.2rem;
-  }
-
-  .project-description {
-    margin-top: 2rem;
+    padding: 5rem 1.5rem 2rem;
   }
 
   .work-counter {
@@ -2921,11 +2924,7 @@ button {
   }
 
   .project-copy h3 {
-    font-size: 4.2rem;
-  }
-
-  .project-meta {
-    grid-template-columns: 1fr;
+    font-size: clamp(3.6rem, 14vw, 6.2rem);
   }
 
   .why {

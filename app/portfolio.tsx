@@ -564,7 +564,6 @@ function Work() {
       <div className="work-stage">
         <div className="work-heading page-shell">
           <p className="eyebrow">03 / Selected work</p>
-          <p>Realistic concepts, shown to demonstrate the kind of systems we build.</p>
         </div>
         <div className="work-panels">
           {projects.map((project, index) => (
@@ -573,8 +572,12 @@ function Work() {
               key={project.name}
               style={{ "--project-index": index } as CSSProperties}
             >
-              <div className="project-visual">
+              <div className="project-scene" aria-hidden="true">
                 <div className="project-grid" aria-hidden="true" />
+                <div className="project-orb project-orb-primary" />
+                <div className="project-orb project-orb-secondary" />
+                <span className="project-echo project-echo-a">{project.name}</span>
+                <span className="project-echo project-echo-b">{project.name}</span>
               </div>
               <div className="project-copy">
                 <h3>{project.name}</h3>
@@ -940,10 +943,11 @@ function PortfolioContent() {
             scrollTrigger: {
               trigger: ".work",
               start: "top top",
-              end: "+=260%",
+              end: () => `+=${Math.max((panels.length - 1) * window.innerHeight * 0.78, window.innerHeight * 2.6)}`,
               pin: ".work-stage",
               scrub: 1,
               anticipatePin: 1,
+              invalidateOnRefresh: true,
             },
           });
 
@@ -952,6 +956,9 @@ function PortfolioContent() {
             timeline
               .to(panels[index].querySelector(".project-copy"), { y: -80, opacity: 0, duration: 0.35 }, start)
               .to(panel, { clipPath: "inset(0% 0 0 0)", duration: 0.9, ease: "power2.inOut" }, start)
+              .fromTo(panel.querySelector(".project-scene"), { yPercent: 18, scale: 1.12 }, { yPercent: 0, scale: 1, duration: 1, ease: "power2.out" }, start)
+              .fromTo(panel.querySelector(".project-copy"), { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.72, ease: "power2.out" }, start + 0.18)
+              .fromTo(panel.querySelectorAll(".project-echo"), { xPercent: -8 }, { xPercent: 0, stagger: 0.06, duration: 1, ease: "power1.out" }, start)
               .set(dots[index], { className: "" }, start + 0.52)
               .set(dots[index + 1], { className: "active" }, start + 0.52);
           });
