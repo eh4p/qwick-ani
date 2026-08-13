@@ -578,13 +578,17 @@ button {
 .signal-track {
   display: flex;
   width: max-content;
+  transform: translate3d(0, 0, 0);
   animation: signal-marquee 28s linear infinite;
   will-change: transform;
 }
 
 .signal-group {
   display: flex;
+  min-width: 100vw;
+  flex: 0 0 auto;
   align-items: center;
+  justify-content: space-around;
   gap: 1.6rem;
   padding: 1.15rem 0.8rem;
 }
@@ -605,7 +609,8 @@ button {
 }
 
 @keyframes signal-marquee {
-  to { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 
 .introduction {
