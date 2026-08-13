@@ -117,9 +117,8 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 1rem;
   padding: 0.55rem 0.55rem 0.55rem 1rem;
-  background: rgba(10, 11, 13, 0.68);
+  background: rgba(10, 11, 13, 0.92);
   box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.16);
-  backdrop-filter: blur(18px);
 }
 
 .logo {
@@ -314,6 +313,7 @@ button {
     linear-gradient(90deg, rgba(5, 7, 10, 0.96) 0%, rgba(5, 7, 10, 0.7) 40%, rgba(5, 7, 10, 0.12) 75%),
     linear-gradient(0deg, rgba(5, 7, 10, 0.88) 0%, transparent 42%, rgba(5, 7, 10, 0.2) 100%);
   opacity: 0.42;
+  will-change: opacity;
 }
 
 .hero-grid {
@@ -358,8 +358,9 @@ button {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 50%;
-  background: rgba(7, 9, 13, 0.36);
-  backdrop-filter: blur(12px);
+  background: rgba(7, 9, 13, 0.84);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .hero-node::before,
@@ -468,6 +469,8 @@ button {
   display: flex;
   width: min(62rem, 76%);
   align-items: flex-end;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
   justify-content: space-between;
   gap: 3rem;
   margin-top: clamp(2rem, 5vh, 4.2rem);
@@ -518,8 +521,7 @@ button {
 }
 
 .button-ghost {
-  background: rgba(10, 11, 13, 0.32);
-  backdrop-filter: blur(12px);
+  background: rgba(10, 11, 13, 0.78);
 }
 
 .button-ghost:hover {
@@ -577,6 +579,7 @@ button {
   display: flex;
   width: max-content;
   animation: signal-marquee 28s linear infinite;
+  will-change: transform;
 }
 
 .signal-group {
@@ -1020,7 +1023,7 @@ button {
 .featured-captions {
   backface-visibility: hidden;
   transform-style: preserve-3d;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .featured-card-scene {
@@ -1206,10 +1209,9 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
   padding: 0.5rem 0.7rem;
-  background: rgba(14, 18, 31, 0.86);
+  background: rgba(14, 18, 31, 0.96);
   color: #c7cbd5;
   font-size: 0.46rem;
-  backdrop-filter: blur(10px);
 }
 
 .assistant-watch i {
@@ -1275,8 +1277,7 @@ button {
   width: 95%;
   height: 95%;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.13);
-  filter: blur(42px);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 68%);
 }
 
 .transaction-content {
@@ -1732,6 +1733,8 @@ button {
   color: var(--white);
   backface-visibility: hidden;
   contain: paint;
+  transform: translateZ(0);
+  will-change: transform, opacity;
 }
 
 .work-panel.theme-light {
@@ -1815,6 +1818,8 @@ button {
   aspect-ratio: 1;
   background: var(--brand-gradient);
   opacity: 0.88;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .project-orb-secondary {
@@ -1870,6 +1875,8 @@ button {
 
 .project-echo-a {
   top: 24%;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .project-echo-b {
@@ -1885,6 +1892,8 @@ button {
   display: flex;
   align-items: center;
   padding: 10rem 5vw 4rem;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
 .project-copy h3 {
@@ -2172,6 +2181,7 @@ button {
   display: flex;
   width: max-content;
   animation: tech-marquee 35s linear infinite;
+  will-change: transform;
 }
 
 .expertise-marquee span {
@@ -2238,6 +2248,8 @@ button {
   background-position: 0 0;
   background-size: 5rem 5rem;
   mask-image: radial-gradient(circle at 62% 45%, black, transparent 67%);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .about::after {
@@ -2250,7 +2262,6 @@ button {
   background: rgba(66, 182, 201, 0.13);
   box-shadow: 0 0 8rem rgba(66, 182, 201, 0.14);
   content: "";
-  filter: blur(3px);
 }
 
 .about-content {
@@ -2304,6 +2315,8 @@ button {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 50%;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .about-stamp span {
@@ -2512,7 +2525,7 @@ button {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   .page-shell {
     width: calc(100% - 2rem);
   }
@@ -2534,7 +2547,45 @@ button {
   }
 
   .hero {
-    height: 150svh;
+    height: auto;
+  }
+
+  .hero-stage {
+    position: relative;
+    min-height: 100svh;
+  }
+
+  .hero-media img,
+  .hero-media-veil,
+  .hero-orbit,
+  .hero-title,
+  .hero-bottom,
+  .signal-track,
+  .services-track,
+  .featured-card-scene,
+  .featured-card-position,
+  .featured-captions,
+  .work-panel,
+  .project-orb-primary,
+  .project-echo-a,
+  .project-copy,
+  .about-grid,
+  .about-stamp,
+  .expertise-marquee > div {
+    will-change: auto;
+  }
+
+  .status-dot::after,
+  .hero-scroll b,
+  .signal-track,
+  .assistant-thinking i,
+  .process-dial::before,
+  .expertise-marquee > div {
+    animation: none;
+  }
+
+  .work-panel {
+    transform: none;
   }
 
   .hero-media-veil {
@@ -2969,92 +3020,6 @@ button {
   }
 
   .footer-bottom span:nth-child(2) {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  .hero {
-    height: auto;
-  }
-
-  .hero-stage {
-    position: relative;
-  }
-
-  .services {
-    padding: 7rem 0;
-  }
-
-  .services-pin {
-    height: auto;
-    overflow: visible;
-    padding: 0;
-  }
-
-  .services-track {
-    width: auto;
-    flex-wrap: wrap;
-    padding-right: 2.5vw;
-    transform: none !important;
-  }
-
-  .service-card {
-    flex: 1 1 22rem;
-  }
-
-  .services-progress {
-    display: none;
-  }
-
-  .work {
-    padding: 7rem 0;
-  }
-
-  .work-stage {
-    height: auto;
-    overflow: visible;
-  }
-
-  .work-heading,
-  .work-panels,
-  .work-panel {
-    position: relative;
-    inset: auto;
-  }
-
-  .work-heading {
-    top: auto;
-    margin-bottom: 3rem;
-  }
-
-  .work-panels {
-    display: grid;
-    gap: 1rem;
-    padding-inline: 2.5vw;
-  }
-
-  .work-panel {
-    min-height: 42rem;
-    overflow: hidden;
-    border: 1px solid var(--line-dark);
-    border-radius: 1rem;
-  }
-
-  .work-counter {
     display: none;
   }
 }

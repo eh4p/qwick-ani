@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -205,13 +205,12 @@ function Logo({ footer = false }: { footer?: boolean }) {
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
 
   return (
     <>
       <motion.header
         className="site-header"
-        initial={prefersReducedMotion ? false : { y: -24, opacity: 0 }}
+        initial={{ y: -24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
@@ -246,7 +245,7 @@ function Header() {
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.55, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
           >
             <nav aria-label="Mobile navigation">
               {[
@@ -760,20 +759,38 @@ function PortfolioContent() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let lenis: Lenis | null = null;
     const lenisFrame = (time: number) => lenis?.raf(time * 1000);
 
-    if (!reduceMotion) {
-      lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 });
-      lenis.on("scroll", ScrollTrigger.update);
-      gsap.ticker.add(lenisFrame);
-      gsap.ticker.lagSmoothing(0);
-    }
-
     const media = gsap.matchMedia();
+    let refreshFrame = 0;
+    let resizeTimer = 0;
+    let isMounted = true;
+
+    const refreshScrollTriggers = () => {
+      window.cancelAnimationFrame(refreshFrame);
+      refreshFrame = window.requestAnimationFrame(() => {
+        lenis?.resize();
+        ScrollTrigger.refresh(true);
+      });
+    };
+
+    const refreshAfterResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(refreshScrollTriggers, 150);
+    };
+
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") refreshScrollTriggers();
+    };
+
     const context = gsap.context(() => {
-      media.add("(prefers-reduced-motion: no-preference)", () => {
+      media.add("(min-width: 768px)", () => {
+        lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 });
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add(lenisFrame);
+        gsap.ticker.lagSmoothing(0);
+
         gsap.utils.toArray<HTMLElement>(".reveal").forEach((element) => {
           gsap.fromTo(
             element,
@@ -789,6 +806,7 @@ function PortfolioContent() {
         });
 
         gsap.timeline({
+          defaults: { force3D: true },
           scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom bottom", scrub: 1.2 },
         })
           .to(".hero-media img", { scale: 1.2, yPercent: 7, ease: "none" }, 0)
@@ -800,10 +818,10 @@ function PortfolioContent() {
           .to(".node-a", { xPercent: -140, yPercent: -90, ease: "none" }, 0)
           .to(".node-b", { xPercent: 120, yPercent: 75, ease: "none" }, 0);
 
-        media.add("(min-width: 901px)", () => {
+        {
           const track = document.querySelector<HTMLElement>(".services-track");
           if (track) {
-            const serviceTween = gsap.to(track, {
+            gsap.to(track, {
               x: () => -(track.scrollWidth - window.innerWidth + window.innerWidth * 0.08),
               ease: "none",
               scrollTrigger: {
@@ -826,16 +844,14 @@ function PortfolioContent() {
                 scrub: true,
               },
             });
-            return () => serviceTween.kill();
           }
-        });
+        }
 
-        media.add({ mobile: "(max-width: 800px)", desktop: "(min-width: 801px)" }, ({ conditions }) => {
-          const isMobile = conditions?.mobile ?? false;
-          const orbitX = window.innerWidth * (isMobile ? 0.6 : 0.46);
-          const orbitY = window.innerHeight * (isMobile ? 0.06 : 0.13);
-          const orbitApex = window.innerHeight * (isMobile ? -0.03 : -0.1);
-          const orbitUnderside = window.innerHeight * (isMobile ? 0.3 : 0.46);
+        {
+          const orbitX = window.innerWidth * 0.46;
+          const orbitY = window.innerHeight * 0.13;
+          const orbitApex = window.innerHeight * -0.1;
+          const orbitUnderside = window.innerHeight * 0.46;
           const cards = gsap.utils.toArray<HTMLElement>(".featured-card-position");
           const captions = gsap.utils.toArray<HTMLElement>(".featured-caption-copy");
           const slots = [
@@ -850,7 +866,7 @@ function PortfolioContent() {
           gsap.set(captions.slice(1), { autoAlpha: 0, y: 18 });
 
           const featuredIntro = gsap.timeline({
-            defaults: { force3D: false },
+            defaults: { force3D: true },
             scrollTrigger: {
               trigger: ".featured-products",
               start: "top bottom",
@@ -888,11 +904,11 @@ function PortfolioContent() {
             .fromTo(".featured-stage .transaction-step i", { scale: 0.5 }, { scale: 1.18, backgroundColor: "#42B6C9", stagger: 0.08, yoyo: true, repeat: 1, duration: 0.16 }, 0.62);
 
           const featuredTimeline = gsap.timeline({
-            defaults: { force3D: false },
+            defaults: { force3D: true },
             scrollTrigger: {
               trigger: ".featured-products",
               start: "top top",
-              end: isMobile ? "+=420%" : "+=500%",
+              end: "+=500%",
               pin: true,
               scrub: 1.15,
               anticipatePin: 1,
@@ -933,11 +949,11 @@ function PortfolioContent() {
 
           featuredTimeline
             .to(".featured-card-scene", { scale: 1.58, opacity: 0, duration: 0.9, ease: "power2.in" }, 4.28)
-            .to(".featured-captions", { scale: 1.38, z: 520, opacity: 0, filter: "blur(12px)", duration: 0.7, ease: "power2.in" }, 4.4)
+            .to(".featured-captions", { scale: 1.38, z: 520, opacity: 0, duration: 0.7, ease: "power2.in" }, 4.4)
             .to(".featured-stage .outline-type", { scale: 1.24, opacity: 0, duration: 0.7, ease: "power2.in" }, 4.4);
-        });
+        }
 
-        media.add("(min-width: 901px)", () => {
+        {
           const panels = gsap.utils.toArray<HTMLElement>(".work-panel");
           const dots = gsap.utils.toArray<HTMLElement>(".work-counter i");
           gsap.set(panels, { zIndex: (index) => index + 1 });
@@ -968,7 +984,7 @@ function PortfolioContent() {
               .set(dots[index], { className: "" }, start + 0.52)
               .set(dots[index + 1], { className: "active" }, start + 0.52);
           });
-        });
+        }
 
         gsap.utils.toArray<HTMLElement>(".process-step").forEach((step) => {
           gsap.fromTo(step, { opacity: 0.24 }, {
@@ -978,7 +994,9 @@ function PortfolioContent() {
         });
 
         gsap.to(".about-grid", {
-          backgroundPosition: "120px 80px",
+          x: 120,
+          y: 80,
+          force3D: true,
           ease: "none",
           scrollTrigger: { trigger: ".about", start: "top bottom", end: "bottom top", scrub: 1 },
         });
@@ -987,12 +1005,39 @@ function PortfolioContent() {
           ease: "none",
           scrollTrigger: { trigger: ".about", start: "top bottom", end: "bottom top", scrub: 1 },
         });
+
+        return () => {
+          gsap.ticker.remove(lenisFrame);
+          lenis?.destroy();
+          lenis = null;
+        };
       });
     }, root);
 
-    ScrollTrigger.refresh();
+    window.addEventListener("load", refreshScrollTriggers);
+    window.addEventListener("resize", refreshAfterResize);
+    window.addEventListener("orientationchange", refreshScrollTriggers);
+    screen.orientation?.addEventListener("change", refreshScrollTriggers);
+    window.addEventListener("pageshow", refreshScrollTriggers);
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    document.fonts?.addEventListener("loadingdone", refreshScrollTriggers);
+    document.fonts?.ready.then(() => {
+      if (isMounted) refreshScrollTriggers();
+    });
+
+    refreshScrollTriggers();
 
     return () => {
+      isMounted = false;
+      window.cancelAnimationFrame(refreshFrame);
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("load", refreshScrollTriggers);
+      window.removeEventListener("resize", refreshAfterResize);
+      window.removeEventListener("orientationchange", refreshScrollTriggers);
+      screen.orientation?.removeEventListener("change", refreshScrollTriggers);
+      window.removeEventListener("pageshow", refreshScrollTriggers);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+      document.fonts?.removeEventListener("loadingdone", refreshScrollTriggers);
       gsap.ticker.remove(lenisFrame);
       lenis?.destroy();
       media.revert();
