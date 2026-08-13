@@ -758,6 +758,7 @@ function PortfolioContent() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     let lenis: Lenis | null = null;
     const lenisFrame = (time: number) => lenis?.raf(time * 1000);
@@ -766,6 +767,7 @@ function PortfolioContent() {
     let refreshFrame = 0;
     let resizeTimer = 0;
     let isMounted = true;
+    let viewportWidth = window.innerWidth;
 
     const refreshScrollTriggers = () => {
       window.cancelAnimationFrame(refreshFrame);
@@ -776,8 +778,16 @@ function PortfolioContent() {
     };
 
     const refreshAfterResize = () => {
+      const nextWidth = window.innerWidth;
+      const isMobileHeightOnlyResize = nextWidth < 768 && Math.abs(nextWidth - viewportWidth) < 2;
+      viewportWidth = nextWidth;
+      if (isMobileHeightOnlyResize) return;
+
       window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(refreshScrollTriggers, 150);
+      resizeTimer = window.setTimeout(() => {
+        gsap.matchMediaRefresh();
+        refreshScrollTriggers();
+      }, 150);
     };
 
     const refreshWhenVisible = () => {
@@ -785,16 +795,20 @@ function PortfolioContent() {
     };
 
     const context = gsap.context(() => {
-      media.add("(min-width: 768px)", () => {
-        lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 });
-        lenis.on("scroll", ScrollTrigger.update);
-        gsap.ticker.add(lenisFrame);
-        gsap.ticker.lagSmoothing(0);
+      media.add({ mobile: "(max-width: 767px)", desktop: "(min-width: 768px)", portrait: "(orientation: portrait)" }, ({ conditions }) => {
+        const isMobile = conditions?.mobile ?? false;
+
+        if (!isMobile) {
+          lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 });
+          lenis.on("scroll", ScrollTrigger.update);
+          gsap.ticker.add(lenisFrame);
+          gsap.ticker.lagSmoothing(0);
+        }
 
         gsap.utils.toArray<HTMLElement>(".reveal").forEach((element) => {
           gsap.fromTo(
             element,
-            { y: 72, opacity: 0 },
+            { y: isMobile ? 36 : 72, opacity: 0 },
             {
               y: 0,
               opacity: 1,
@@ -809,12 +823,12 @@ function PortfolioContent() {
           defaults: { force3D: true },
           scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom bottom", scrub: 1.2 },
         })
-          .to(".hero-media img", { scale: 1.2, yPercent: 7, ease: "none" }, 0)
+          .to(".hero-media img", { scale: isMobile ? 1.1 : 1.2, yPercent: isMobile ? 4 : 7, ease: "none" }, 0)
           .to(".hero-media-veil", { opacity: 0.68, ease: "none" }, 0)
-          .to(".hero-title", { yPercent: -22, opacity: 0.08, ease: "none" }, 0)
-          .to(".hero-bottom", { yPercent: -35, opacity: 0, ease: "none" }, 0)
-          .to(".orbit-a", { rotate: 60, scale: 1.2, ease: "none" }, 0)
-          .to(".orbit-b", { rotate: -48, scale: 0.8, ease: "none" }, 0)
+          .to(".hero-title", { yPercent: isMobile ? -12 : -22, opacity: 0.08, ease: "none" }, 0)
+          .to(".hero-bottom", { yPercent: isMobile ? -18 : -35, opacity: 0, ease: "none" }, 0)
+          .to(".orbit-a", { rotate: isMobile ? 32 : 60, scale: isMobile ? 1.1 : 1.2, ease: "none" }, 0)
+          .to(".orbit-b", { rotate: isMobile ? -26 : -48, scale: isMobile ? 0.9 : 0.8, ease: "none" }, 0)
           .to(".node-a", { xPercent: -140, yPercent: -90, ease: "none" }, 0)
           .to(".node-b", { xPercent: 120, yPercent: 75, ease: "none" }, 0);
 
@@ -827,7 +841,7 @@ function PortfolioContent() {
               scrollTrigger: {
                 trigger: ".services",
                 start: "top top",
-                end: () => `+=${Math.max(track.scrollWidth * 0.72, window.innerHeight * 2.5)}`,
+                end: () => `+=${Math.max(track.scrollWidth * (isMobile ? 0.58 : 0.72), window.innerHeight * (isMobile ? 1.8 : 2.5))}`,
                 pin: ".services-pin",
                 scrub: 1,
                 anticipatePin: 1,
@@ -840,7 +854,7 @@ function PortfolioContent() {
               scrollTrigger: {
                 trigger: ".services",
                 start: "top top",
-                end: () => `+=${Math.max(track.scrollWidth * 0.72, window.innerHeight * 2.5)}`,
+                end: () => `+=${Math.max(track.scrollWidth * (isMobile ? 0.58 : 0.72), window.innerHeight * (isMobile ? 1.8 : 2.5))}`,
                 scrub: true,
               },
             });
@@ -848,10 +862,10 @@ function PortfolioContent() {
         }
 
         {
-          const orbitX = window.innerWidth * 0.46;
-          const orbitY = window.innerHeight * 0.13;
-          const orbitApex = window.innerHeight * -0.1;
-          const orbitUnderside = window.innerHeight * 0.46;
+          const orbitX = window.innerWidth * (isMobile ? 0.6 : 0.46);
+          const orbitY = window.innerHeight * (isMobile ? 0.06 : 0.13);
+          const orbitApex = window.innerHeight * (isMobile ? -0.03 : -0.1);
+          const orbitUnderside = window.innerHeight * (isMobile ? 0.3 : 0.46);
           const cards = gsap.utils.toArray<HTMLElement>(".featured-card-position");
           const captions = gsap.utils.toArray<HTMLElement>(".featured-caption-copy");
           const slots = [
@@ -908,7 +922,7 @@ function PortfolioContent() {
             scrollTrigger: {
               trigger: ".featured-products",
               start: "top top",
-              end: "+=500%",
+              end: isMobile ? "+=420%" : "+=500%",
               pin: true,
               scrub: 1.15,
               anticipatePin: 1,
@@ -963,7 +977,7 @@ function PortfolioContent() {
             scrollTrigger: {
               trigger: ".work",
               start: "top top",
-              end: () => `+=${Math.max((panels.length - 1) * window.innerHeight * 0.78, window.innerHeight * 2.6)}`,
+              end: () => `+=${Math.max((panels.length - 1) * window.innerHeight * (isMobile ? 0.62 : 0.78), window.innerHeight * (isMobile ? 2.2 : 2.6))}`,
               pin: ".work-stage",
               scrub: 1,
               anticipatePin: 1,
@@ -994,8 +1008,8 @@ function PortfolioContent() {
         });
 
         gsap.to(".about-grid", {
-          x: 120,
-          y: 80,
+          x: isMobile ? 48 : 120,
+          y: isMobile ? 32 : 80,
           force3D: true,
           ease: "none",
           scrollTrigger: { trigger: ".about", start: "top bottom", end: "bottom top", scrub: 1 },
