@@ -138,42 +138,15 @@ const services = [
 ];
 
 const projects = [
-  {
-    number: "01",
-    name: "Vector",
-    type: "Logistics intelligence platform",
-    description:
-      "A command center that turns live fleet data into faster routes, fewer exceptions, and clearer decisions.",
-    result: "38% faster dispatch",
-    scope: "Product · UX · Platform · Data",
-    image: "/qrfds/project-vector-v2.png",
-    alt: "Dark logistics intelligence platform with cyan fleet routes and analytics",
-    theme: "dark",
-  },
-  {
-    number: "02",
-    name: "Orbit",
-    type: "Clinical operations system",
-    description:
-      "A calm operational layer connecting teams, patient flow, and capacity across a complex care network.",
-    result: "2.4× faster planning",
-    scope: "Strategy · Design system · AI",
-    image: "/qrfds/project-orbit-v2.png",
-    alt: "Bright clinical operations system with cyan and blue translucent data panels",
-    theme: "light",
-  },
-  {
-    number: "03",
-    name: "Aether",
-    type: "AI infrastructure workspace",
-    description:
-      "A visual system for deploying, observing, and improving AI workflows across one secure workspace.",
-    result: "From prototype to scale",
-    scope: "Research · SaaS · Cloud",
-    image: "/qrfds/project-aether-v2.png",
-    alt: "Glass AI infrastructure modules connected by cyan and blue data pathways",
-    theme: "electric",
-  },
+  { name: "Allianz", theme: "dark" },
+  { name: "HNI (Hanan Nagi)", theme: "light" },
+  { name: "Address Investment", theme: "electric" },
+  { name: "Atomic Rides", theme: "dark" },
+  { name: "LENSAURA", theme: "light" },
+  { name: "Optimim Oil", theme: "electric" },
+  { name: "Colorplay", theme: "dark" },
+  { name: "Bfas", theme: "light" },
+  { name: "11:11", theme: "electric" },
 ];
 
 const process = [
@@ -601,34 +574,16 @@ function Work() {
               style={{ "--project-index": index } as CSSProperties}
             >
               <div className="project-visual">
-                <Image
-                  src={project.image}
-                  alt={project.alt}
-                  fill
-                  sizes="(max-width: 900px) 100vw, 66vw"
-                />
                 <div className="project-grid" aria-hidden="true" />
-                <span className="project-chip">Case study · {project.number}</span>
               </div>
               <div className="project-copy">
-                <div>
-                  <p>{project.type}</p>
-                  <h3>{project.name}</h3>
-                </div>
-                <p className="project-description">{project.description}</p>
-                <div className="project-meta">
-                  <span><small>Outcome</small>{project.result}</span>
-                  <span><small>Scope</small>{project.scope}</span>
-                </div>
-                <a href="#contact" className="project-link" aria-label={`Build a product like ${project.name}`}>
-                  Build something ambitious <Arrow diagonal />
-                </a>
+                <h3>{project.name}</h3>
               </div>
             </article>
           ))}
         </div>
         <div className="work-counter" aria-hidden="true">
-          {projects.map((project, index) => <i className={index === 0 ? "active" : ""} key={project.number} />)}
+          {projects.map((project, index) => <i className={index === 0 ? "active" : ""} key={project.name} />)}
         </div>
       </div>
     </section>
@@ -997,7 +952,6 @@ function PortfolioContent() {
             timeline
               .to(panels[index].querySelector(".project-copy"), { y: -80, opacity: 0, duration: 0.35 }, start)
               .to(panel, { clipPath: "inset(0% 0 0 0)", duration: 0.9, ease: "power2.inOut" }, start)
-              .fromTo(panel.querySelector(".project-visual img"), { scale: 1.14 }, { scale: 1, duration: 0.9, ease: "power2.out" }, start)
               .set(dots[index], { className: "" }, start + 0.52)
               .set(dots[index + 1], { className: "active" }, start + 0.52);
           });
