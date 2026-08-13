@@ -190,11 +190,14 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 function Logo({ footer = false }: { footer?: boolean }) {
   return (
     <a className={`logo ${footer ? "logo-footer" : ""}`} href="#top" aria-label="QRFDS — back to top">
-      <span className="logo-mark" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </span>
+      <Image
+        className="logo-image"
+        src="/qrfds/qrfds-logo.webp"
+        alt=""
+        width={512}
+        height={493}
+        aria-hidden="true"
+      />
       <span>QRFDS</span>
     </a>
   );
@@ -262,7 +265,7 @@ function Header() {
             </nav>
             <div className="mobile-menu-foot">
               <span>Digital products, built properly.</span>
-              <a href="mailto:hello@qrfds.com">hello@qrfds.com</a>
+              <a href="mailto:info@qrfds.com">info@qrfds.com</a>
             </div>
           </motion.div>
         )}
@@ -717,9 +720,9 @@ function Contact() {
         <p className="eyebrow reveal">Have an idea worth building?</p>
         <h2 className="reveal">Let&apos;s make it<br /><em>real.</em></h2>
         <div className="contact-row reveal">
-          <a href="mailto:hello@qrfds.com">
+          <a href="mailto:info@qrfds.com">
             <span>Start a conversation</span>
-            <strong>hello@qrfds.com</strong>
+            <strong>info@qrfds.com</strong>
             <i><Arrow diagonal /></i>
           </a>
           <p>
@@ -739,7 +742,7 @@ function Footer() {
         <Logo footer />
         <div className="footer-nav">
           <div><span>Explore</span><a href="#services">Services</a><a href="#work">Work</a><a href="#about">About</a><a href="#process">Process</a></div>
-          <div><span>Connect</span><a href="mailto:hello@qrfds.com">Email</a><a href="https://www.linkedin.com/company/qrfds/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/qrfds" target="_blank" rel="noreferrer">GitHub</a></div>
+          <div><span>Connect</span><a href="mailto:info@qrfds.com">Email</a><a href="https://www.linkedin.com/company/qrfds/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/qrfds" target="_blank" rel="noreferrer">GitHub</a></div>
         </div>
       </div>
       <div className="page-shell footer-bottom">
