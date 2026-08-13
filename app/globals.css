@@ -1784,13 +1784,8 @@ button {
     radial-gradient(circle at 78% 46%, rgba(66, 182, 201, 0.2), transparent 28rem),
     linear-gradient(135deg, #071116, #0b2632 58%, #071116);
   color: var(--white);
-  will-change: clip-path;
-}
-
-@media (min-width: 901px) {
-  .work-panel:not(:first-child) {
-    clip-path: inset(100% 0 0 0);
-  }
+  backface-visibility: hidden;
+  contain: paint;
 }
 
 .work-panel.theme-light {
@@ -1810,8 +1805,6 @@ button {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  transform-origin: center bottom;
-  will-change: transform;
 }
 
 .project-scene::before {
@@ -1855,7 +1848,7 @@ button {
     linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
   background-size: 5rem 5rem;
-  mask-image: radial-gradient(circle at 70% 52%, black, transparent 72%);
+  opacity: 0.55;
 }
 
 .theme-light .project-grid {
@@ -1875,7 +1868,6 @@ button {
   width: clamp(8rem, 16vw, 18rem);
   aspect-ratio: 1;
   background: var(--brand-gradient);
-  box-shadow: 0 0 6rem rgba(53, 199, 214, 0.32);
   opacity: 0.88;
 }
 
@@ -1886,7 +1878,6 @@ button {
   aspect-ratio: 1;
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.035);
-  backdrop-filter: blur(8px);
 }
 
 .theme-light .project-orb-secondary {
@@ -1948,7 +1939,6 @@ button {
   display: flex;
   align-items: center;
   padding: 10rem 5vw 4rem;
-  will-change: opacity, transform;
 }
 
 .project-copy h3 {
@@ -3132,7 +3122,6 @@ button {
     overflow: hidden;
     border: 1px solid var(--line-dark);
     border-radius: 1rem;
-    clip-path: none !important;
   }
 
   .work-counter {

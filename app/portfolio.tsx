@@ -937,7 +937,8 @@ function PortfolioContent() {
         media.add("(min-width: 901px)", () => {
           const panels = gsap.utils.toArray<HTMLElement>(".work-panel");
           const dots = gsap.utils.toArray<HTMLElement>(".work-counter i");
-          gsap.set(panels.slice(1), { clipPath: "inset(100% 0 0 0)" });
+          gsap.set(panels, { zIndex: (index) => index + 1 });
+          gsap.set(panels.slice(1), { yPercent: 100, autoAlpha: 0 });
 
           const timeline = gsap.timeline({
             scrollTrigger: {
@@ -955,10 +956,12 @@ function PortfolioContent() {
             const start = index * 1.2 + 0.35;
             timeline
               .to(panels[index].querySelector(".project-copy"), { y: -80, opacity: 0, duration: 0.35 }, start)
-              .to(panel, { clipPath: "inset(0% 0 0 0)", duration: 0.9, ease: "power2.inOut" }, start)
-              .fromTo(panel.querySelector(".project-scene"), { yPercent: 18, scale: 1.12 }, { yPercent: 0, scale: 1, duration: 1, ease: "power2.out" }, start)
+              .set(panel, { autoAlpha: 1 }, start)
+              .to(panel, { yPercent: 0, duration: 0.9, ease: "power2.inOut", force3D: true }, start)
               .fromTo(panel.querySelector(".project-copy"), { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.72, ease: "power2.out" }, start + 0.18)
-              .fromTo(panel.querySelectorAll(".project-echo"), { xPercent: -8 }, { xPercent: 0, stagger: 0.06, duration: 1, ease: "power1.out" }, start)
+              .fromTo(panel.querySelector(".project-orb-primary"), { yPercent: 28 }, { yPercent: 0, duration: 0.9, ease: "power2.out", force3D: true }, start)
+              .fromTo(panel.querySelector(".project-echo-a"), { xPercent: -5 }, { xPercent: 0, duration: 0.9, ease: "power1.out", force3D: true }, start)
+              .set(panels[index], { autoAlpha: 0 }, start + 0.9)
               .set(dots[index], { className: "" }, start + 0.52)
               .set(dots[index + 1], { className: "active" }, start + 0.52);
           });
