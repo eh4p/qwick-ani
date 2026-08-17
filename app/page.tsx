@@ -1,5 +1,5 @@
-import Portfolio from "./portfolio";
+import Storefront from "./storefront";
 
 export default function Home() {
-  return <Portfolio />;
+  return <Storefront />;
 }

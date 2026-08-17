@@ -13,16 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QRFDS — Software, engineered for what’s next",
+  title: "PULSE/01 — Objects for Human Output",
   description:
-    "QRFDS is a software company designing and engineering ambitious web, mobile, SaaS, cloud, and AI products.",
-  metadataBase: new URL("https://qrfds.com"),
+    "Performance fuel, hydration, mobility, and recovery essentials engineered for repeatable human output.",
   openGraph: {
-    title: "QRFDS — Software, engineered for what’s next",
+    title: "PULSE/01 — Objects for Human Output",
     description:
-      "Strategy, design, and engineering for ambitious digital products.",
-    url: "https://qrfds.com",
-    siteName: "QRFDS",
+      "Performance essentials, reduced to what moves you forward.",
+    siteName: "PULSE/01",
     type: "website",
   },
 };
