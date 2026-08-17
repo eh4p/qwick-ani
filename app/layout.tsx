@@ -13,15 +13,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PULSE/01 — Objects for Human Output",
+  title: "SEAM/03 — A Line Becomes a Life",
   description:
-    "Performance fuel, hydration, mobility, and recovery essentials engineered for repeatable human output.",
+    "Pattern-led clothing and objects, drawn in Cairo and made in small rooms. Explore Collection III from SEAM/03.",
   openGraph: {
-    title: "PULSE/01 — Objects for Human Output",
+    title: "SEAM/03 — A Line Becomes a Life",
     description:
-      "Performance essentials, reduced to what moves you forward.",
-    siteName: "PULSE/01",
+      "Six forms cut for material, motion, and a life beyond the season.",
+    siteName: "SEAM/03",
     type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1731,
+        height: 909,
+        alt: "SEAM/03 — A Line Becomes a Life",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SEAM/03 — A Line Becomes a Life",
+    description: "Six forms cut for material, motion, and a life beyond the season.",
+    images: ["/og.png"],
   },
 };
 
