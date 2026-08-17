@@ -13,17 +13,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QRFDS — Software, engineered for what’s next",
+  title: "STILL/FORM — Domestic studies, made useful",
   description:
-    "QRFDS is a software company designing and engineering ambitious web, mobile, SaaS, cloud, and AI products.",
-  metadataBase: new URL("https://qrfds.com"),
+    "Tactile furniture, lighting, ceramics, and textiles for rooms in motion.",
+  metadataBase: new URL("https://stillform.example"),
   openGraph: {
-    title: "QRFDS — Software, engineered for what’s next",
+    title: "STILL/FORM — Domestic studies, made useful",
     description:
-      "Strategy, design, and engineering for ambitious digital products.",
-    url: "https://qrfds.com",
-    siteName: "QRFDS",
+      "Tactile furniture, lighting, ceramics, and textiles for rooms in motion.",
+    url: "https://stillform.example",
+    siteName: "STILL/FORM",
     type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1745,
+        height: 909,
+        alt: "STILL/FORM Fold Lounge exhibition",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "STILL/FORM — Domestic studies, made useful",
+    description:
+      "Tactile furniture, lighting, ceramics, and textiles for rooms in motion.",
+    images: ["/og.png"],
   },
 };
 
