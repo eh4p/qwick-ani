@@ -1,28 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "QRFDS — Software, engineered for what’s next",
+  title: "Velaire — Premium Beauty Component Library",
   description:
-    "QRFDS is a software company designing and engineering ambitious web, mobile, SaaS, cloud, and AI products.",
-  metadataBase: new URL("https://qrfds.com"),
+    "A curated showroom of 55 premium e-commerce components for a prestige botanical beauty house.",
   openGraph: {
-    title: "QRFDS — Software, engineered for what’s next",
+    title: "Velaire — Premium Beauty Component Library",
     description:
-      "Strategy, design, and engineering for ambitious digital products.",
-    url: "https://qrfds.com",
-    siteName: "QRFDS",
+      "55 art-directed, responsive commerce components for beauty.",
+    siteName: "Velaire Component Library",
     type: "website",
   },
 };
@@ -33,10 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full">{children}</body>
     </html>
   );

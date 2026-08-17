@@ -1,5 +1,5 @@
-import Portfolio from "./portfolio";
+import BeautyGallery from "@/components/beauty-gallery/Gallery";
 
 export default function Home() {
-  return <Portfolio />;
+  return <BeautyGallery />;
 }
