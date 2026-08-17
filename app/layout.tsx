@@ -13,17 +13,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QRFDS — Software, engineered for what’s next",
+  title: "VELORA — Skin in another state",
   description:
-    "QRFDS is a software company designing and engineering ambitious web, mobile, SaaS, cloud, and AI products.",
-  metadataBase: new URL("https://qrfds.com"),
+    "Bio-intelligent, barrier-conscious skincare designed to move with your skin.",
+  metadataBase: new URL("https://velora.example"),
+  icons: {
+    icon: "/velora/mark.svg",
+    shortcut: "/velora/mark.svg",
+  },
   openGraph: {
-    title: "QRFDS — Software, engineered for what’s next",
+    title: "VELORA — Skin in another state",
     description:
-      "Strategy, design, and engineering for ambitious digital products.",
-    url: "https://qrfds.com",
-    siteName: "QRFDS",
+      "Bio-intelligent skincare for skin in motion.",
+    url: "https://velora.example",
+    siteName: "VELORA",
     type: "website",
+    images: ["/velora/skin-phase.png"],
   },
 };
 
