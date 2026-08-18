@@ -149,7 +149,7 @@ const projects = [
     mediaInk: "#003781",
   },
   {
-    name: "HNI (Hanan Nagi)",
+    name: "HNI",
     image: "/clients/hn.svg",
     layout: "signature",
     background: "#1a1613",
