@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Velaire — Premium Beauty Component Library",
+  title: "NTH/FORM — Health & Fitness Component Library",
   description:
-    "A curated showroom of 55 premium e-commerce components for a prestige botanical beauty house.",
+    "A curated showroom of 55 premium e-commerce components for technical health and fitness retail.",
   openGraph: {
-    title: "Velaire — Premium Beauty Component Library",
+    title: "NTH/FORM — Health & Fitness Component Library",
     description:
-      "55 art-directed, responsive commerce components for beauty.",
-    siteName: "Velaire Component Library",
+      "55 kinetic, responsive commerce components for training, equipment, fuel, and recovery.",
+    siteName: "NTH/FORM Component Library",
     type: "website",
   },
 };
