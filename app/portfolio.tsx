@@ -659,7 +659,7 @@ function Work() {
                 </span>
                 <div className="project-orbit" aria-hidden="true"><i /><i /></div>
                 <div className="project-wordstream" aria-hidden="true">
-                  <span>{project.name}</span><i /><span>{project.name}</span><i /><span>{project.name}</span>
+                  <span>Selected work</span><i /><span>Client archive</span>
                 </div>
                 <div className="project-media-position">
                   <div className={`project-media project-media-${project.layout}`}>
@@ -1102,8 +1102,8 @@ function PortfolioContent() {
               .fromTo(panel.querySelector(".project-wordstream"), { xPercent: 5 }, { xPercent: 0, duration: 0.9, ease: "power1.out", force3D: true }, start)
               .fromTo(panel.querySelector(".project-index"), { xPercent: 10 }, { xPercent: 0, duration: 0.9, ease: "power1.out", force3D: true }, start)
               .set(panels[index], { autoAlpha: 0 }, start + 0.9)
-              .set(dots[index], { className: "" }, start + 0.52)
-              .set(dots[index + 1], { className: "active" }, start + 0.52);
+              .set(dots[index], { className: "" }, start + 0.9)
+              .set(dots[index + 1], { className: "active" }, start + 0.9);
           });
         }
 
