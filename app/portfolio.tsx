@@ -138,15 +138,86 @@ const services = [
 ];
 
 const projects = [
-  { name: "Allianz", theme: "dark" },
-  { name: "HNI (Hanan Nagi)", theme: "light" },
-  { name: "Address Investment", theme: "electric" },
-  { name: "Atomic Rides", theme: "dark" },
-  { name: "LENSAURA", theme: "light" },
-  { name: "Optimim Oil", theme: "electric" },
-  { name: "Colorplay", theme: "dark" },
-  { name: "Bfas", theme: "light" },
-  { name: "11:11", theme: "electric" },
+  {
+    name: "Allianz",
+    image: "/clients/allianz.svg",
+    layout: "wide",
+    background: "#dbe8f4",
+    ink: "#003781",
+    accent: "#2279ca",
+    surface: "#f6fbff",
+    mediaInk: "#003781",
+  },
+  {
+    name: "HNI (Hanan Nagi)",
+    image: "/clients/hn.svg",
+    layout: "signature",
+    background: "#1a1613",
+    ink: "#f2e8d6",
+    accent: "#d2b880",
+    surface: "#28211c",
+    mediaInk: "#f2e8d6",
+  },
+  {
+    name: "Atomic Rides",
+    image: "/clients/Atomic_Rides.png",
+    layout: "wide",
+    background: "#c8eef0",
+    ink: "#062c35",
+    accent: "#00a3b5",
+    surface: "#f4feff",
+    mediaInk: "#062c35",
+  },
+  {
+    name: "LENSAURA",
+    image: "/clients/lensaura.svg",
+    layout: "mark",
+    background: "#d9d4f7",
+    ink: "#221c3b",
+    accent: "#7566d5",
+    surface: "#f5f2ff",
+    mediaInk: "#221c3b",
+  },
+  {
+    name: "Optimum Oil",
+    image: "/clients/Optimum_oil.png",
+    layout: "mark",
+    background: "#37120f",
+    ink: "#fff3ec",
+    accent: "#ef2f1f",
+    surface: "#f5e4df",
+    mediaInk: "#37120f",
+  },
+  {
+    name: "Colorplay",
+    image: "/clients/colorplay.png",
+    layout: "mark",
+    background: "#fbf34d",
+    ink: "#181309",
+    accent: "#ff8ba0",
+    surface: "#fffdf0",
+    mediaInk: "#181309",
+  },
+  {
+    name: "BFAS",
+    image: "/clients/bfas.png",
+    layout: "mark",
+    background: "#d8f3de",
+    ink: "#151331",
+    accent: "#21b53c",
+    surface: "#f4fff5",
+    mediaInk: "#151331",
+  },
+  {
+    name: "11:11",
+    image: "/clients/11_11.png",
+    layout: "wide",
+    background: "#e9d9d4",
+    ink: "#15110f",
+    accent: "#de6b5d",
+    surface: "#fff9f7",
+    mediaInk: "#15110f",
+  },
 ];
 
 const process = [
@@ -565,24 +636,57 @@ function Work() {
     <section className="work" id="work">
       <div className="work-stage">
         <div className="work-heading page-shell">
-          <p className="eyebrow">03 / Selected work</p>
+          <p className="eyebrow">03 / Client projects</p>
+          <span>{String(projects.length).padStart(2, "0")} selected collaborations</span>
         </div>
         <div className="work-panels">
           {projects.map((project, index) => (
             <article
-              className={`work-panel project-${index + 1} theme-${project.theme}`}
+              className={`work-panel project-${index + 1}`}
               key={project.name}
-              style={{ "--project-index": index } as CSSProperties}
+              style={{
+                "--project-background": project.background,
+                "--project-ink": project.ink,
+                "--project-accent": project.accent,
+                "--project-surface": project.surface,
+                "--project-media-ink": project.mediaInk,
+              } as CSSProperties}
             >
-              <div className="project-scene" aria-hidden="true">
+              <div className="project-scene">
                 <div className="project-grid" aria-hidden="true" />
-                <div className="project-orb project-orb-primary" />
-                <div className="project-orb project-orb-secondary" />
-                <span className="project-echo project-echo-a">{project.name}</span>
-                <span className="project-echo project-echo-b">{project.name}</span>
+                <span className="project-index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div className="project-orbit" aria-hidden="true"><i /><i /></div>
+                <div className="project-wordstream" aria-hidden="true">
+                  <span>{project.name}</span><i /><span>{project.name}</span><i /><span>{project.name}</span>
+                </div>
+                <div className="project-media-position">
+                  <div className={`project-media project-media-${project.layout}`}>
+                    <div className="project-media-header" aria-hidden="true">
+                      <span><i /> QRFDS / Client archive</span>
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                    </div>
+                    <div className="project-logo">
+                      <Image
+                        src={project.image}
+                        alt={`${project.name} logo`}
+                        fill
+                        sizes="(max-width: 767px) 82vw, 52vw"
+                        unoptimized={project.image.endsWith(".svg")}
+                      />
+                    </div>
+                    <span className="project-media-caption">Selected collaboration</span>
+                  </div>
+                </div>
               </div>
               <div className="project-copy">
-                <h3>{project.name}</h3>
+                <span className="project-copy-number">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <small>Client project</small>
+                  <h3>{project.name}</h3>
+                </div>
+                <span className="project-copy-mark" aria-hidden="true">QRFDS®</span>
               </div>
             </article>
           ))}
@@ -989,11 +1093,14 @@ function PortfolioContent() {
             const start = index * 1.2 + 0.35;
             timeline
               .to(panels[index].querySelector(".project-copy"), { y: -80, opacity: 0, duration: 0.35 }, start)
+              .to(panels[index].querySelector(".project-media"), { yPercent: -14, scale: 0.96, duration: 0.9, ease: "power1.inOut" }, start)
+              .to(panels[index].querySelector(".project-wordstream"), { xPercent: -4, duration: 0.9, ease: "none" }, start)
               .set(panel, { autoAlpha: 1 }, start)
               .to(panel, { yPercent: 0, duration: 0.9, ease: "power2.inOut", force3D: true }, start)
               .fromTo(panel.querySelector(".project-copy"), { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.72, ease: "power2.out" }, start + 0.18)
-              .fromTo(panel.querySelector(".project-orb-primary"), { yPercent: 28 }, { yPercent: 0, duration: 0.9, ease: "power2.out", force3D: true }, start)
-              .fromTo(panel.querySelector(".project-echo-a"), { xPercent: -5 }, { xPercent: 0, duration: 0.9, ease: "power1.out", force3D: true }, start)
+              .fromTo(panel.querySelector(".project-media"), { yPercent: 26, scale: 0.9 }, { yPercent: 0, scale: 1, duration: 0.9, ease: "power2.out", force3D: true }, start)
+              .fromTo(panel.querySelector(".project-wordstream"), { xPercent: 5 }, { xPercent: 0, duration: 0.9, ease: "power1.out", force3D: true }, start)
+              .fromTo(panel.querySelector(".project-index"), { xPercent: 10 }, { xPercent: 0, duration: 0.9, ease: "power1.out", force3D: true }, start)
               .set(panels[index], { autoAlpha: 0 }, start + 0.9)
               .set(dots[index], { className: "" }, start + 0.52)
               .set(dots[index + 1], { className: "active" }, start + 0.52);
